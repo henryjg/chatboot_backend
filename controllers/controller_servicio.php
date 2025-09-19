@@ -39,17 +39,19 @@ class ServicioController {
 	public function getServicios() {
 		$conexion = new Conexion();
 		$query = "SELECT 
-					servicio_id as id,
-					servicio_categoria as categoria_id,
-					servicio_nombre as nombre,
-					servicio_descripcion as descripcion,
-					servicio_beneficios as beneficios,
-					servicio_precio as precio,
-					servicio_facilidades as facilidades,
-					servicio_video1 as video1,
-					servicio_video2 as video2,
-					servicio_info_adicional as info_adicional
-				FROM servicio";
+					s.servicio_id as id,
+					s.servicio_categoria as categoria_id,
+					c.nombre as categoria_nombre,
+					s.servicio_nombre as nombre,
+					s.servicio_descripcion as descripcion,
+					s.servicio_beneficios as beneficios,
+					s.servicio_precio as precio,
+					s.servicio_facilidades as facilidades,
+					s.servicio_video1 as video1,
+					s.servicio_video2 as video2,
+					s.servicio_info_adicional as info_adicional
+				FROM servicio s
+				LEFT JOIN categorias c ON s.servicio_categoria = c.id";
 		$result = $conexion->ejecutarConsulta($query);
 
 		if ($result && $result->num_rows > 0) {

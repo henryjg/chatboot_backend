@@ -603,6 +603,7 @@ if ($metodoPeticion === 'POST') {
             $apellidos =  $data['apellidos'];
             $cargo =  $data['cargo'];
             $supervisor = $data['supervisor_id'] ?? null;
+            $rol =  $data['rol'] ?? null;
             $correo =  $data['correo'];
             $telefono =  $data['telefono'];
             $celular =  $data['celular'];
@@ -616,7 +617,8 @@ if ($metodoPeticion === 'POST') {
             }
             
             echo $TrabajadorController->updateTrabajador($id,
-                $dni,$nombre,$apellidos,$correo,$cargo,$supervisor,$telefono,
+                $dni,$nombre,$apellidos,$correo,$cargo,$supervisor,
+                $rol, $telefono,
                 $celular,$fnacimiento,$fotoPerfil
             );
             break;

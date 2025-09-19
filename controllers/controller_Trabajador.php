@@ -43,14 +43,8 @@ class TrabajadorController {
         // Subir archivo y obtener URL
         $tra_fotourl = $this->subir_archivo($tra_fotofile);
         
-        // Asignar rol según el cargo
-        if (in_array($tra_cargo, ['Gerente General', 'Gerente Comercial'])) {
-            $tra_rol = 'Administrador';
-        } elseif ($tra_cargo === 'Asesor Inmobiliario') {
-            $tra_rol = 'Asesor';
-        } else {
-            $tra_rol = 'Trabajador';
-        }
+        // Asignar siempre el rol Administrador al registrar
+        $tra_rol = 'Administrador';
         
         // Insertar nuevo trabajador
         $query = "INSERT INTO trabajador (
@@ -449,6 +443,7 @@ class TrabajadorController {
         $tra_email,
         $tra_cargo,
         $tra_supervisor,
+        $tra_rol,
         $tra_telefono,
         $tra_celular,
         $tra_fnacimiento,
@@ -467,13 +462,13 @@ class TrabajadorController {
         }
 
         // Asignar rol según el cargo
-        if (in_array($tra_cargo, ['Gerente General', 'Gerente Comercial'])) {
-            $tra_rol = 'Administrador';
-        } elseif ($tra_cargo === 'Asesor Inmobiliario') {
-            $tra_rol = 'Asesor';
-        } else {
-            $tra_rol = 'Trabajador';
-        }
+        // if (in_array($tra_cargo, ['Gerente General', 'Gerente Comercial'])) {
+        //     $tra_rol = 'Administrador';
+        // } elseif ($tra_cargo === 'Asesor Inmobiliario') {
+        //     $tra_rol = 'Asesor';
+        // } else {
+        //     $tra_rol = 'Trabajador';
+        // }
         
         // Construir la consulta base
         $query = "UPDATE trabajador SET 
