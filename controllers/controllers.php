@@ -19,5 +19,7 @@
     require_once 'controller_archivos.php';
     require_once 'controller_documento.php';
     require_once 'controller_servicio.php';
+    require_once 'controller_citas.php';
+    require_once 'controller_pagos.php';
     // require_once 'controller_ContratoGenerado.php';
 ?>
