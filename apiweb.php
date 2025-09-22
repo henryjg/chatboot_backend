@@ -504,42 +504,6 @@ if ($metodoPeticion === 'POST') {
             echo $TrabajadorController->getTrabajadores();
             break;
 
-       case 'get_asesores_general':
-            $asesorId = $data['asesorId'] ?? null;
-            $supervisorId = $data['supervisorId'] ?? null;
-            $inmuebleId = $data['inmuebleId'] ?? null;
-            echo $TrabajadorController->get_Asesores_General($asesorId, $supervisorId, $inmuebleId);
-            break;
-            
-
-        case 'get_asesores':
-            echo $TrabajadorController->getAsesores();
-            break;
-
-        case 'get_asesores_asignado':
-            $inmuebleId     =  $data['inmuebleId'];
-            echo $TrabajadorController->getAsesores_asignado($inmuebleId);
-            break;
-
-        case 'delete_asesorAsignado':
-            $asig_id   =  $data['id'];
-            echo $TrabajadorController->eliminarAsesorAsignado($asig_id);
-            break;            
-
-        case 'delete_asesor':
-            $trabajadorId = $data['trabajadorId'];
-            $inmuebleId = $data['inmuebleId'];
-            $comentario = $data['comentario'];
-            echo $TrabajadorController->quitar_asignacion($trabajadorId, $inmuebleId, $comentario);
-            break; 
-
-        case 'asignar_Asesor':
-            $trabajadorId = $data['trabajadorId'];
-            $inmuebleId = $data['inmuebleId'];
-            $tipoAsignacion = $data['tipoAsignacion'];
-            echo $TrabajadorController->Asignar_Asesor($trabajadorId, $inmuebleId, $tipoAsignacion);
-            break;
-
         case 'del_trabajador':
             $id =  $data['id'];
             echo $TrabajadorController->updateEstadoTrabajador($id,"Inactivo");
@@ -570,12 +534,12 @@ if ($metodoPeticion === 'POST') {
             $dni = $data['dni'];
             $nombre = $data['nombre'];
             $apellidos = $data['apellidos'];
-            $cargo = $data['cargo'];
+            $cargo = $data['cargo']?? null;
             $supervisor = $data['supervisor_id'] ?? null;
-            $correo = $data['correo'];
-            $telefono = $data['telefono'];
+            $correo = $data['email'];
+            $telefono = $data['celular'];
             $celular = $data['celular'];
-            $fnacimiento = $data['fnacimiento'];
+            $fnacimiento = $data['fechaNacimiento'];
             $fotoPerfil = $_FILES['fotoPerfil'] ?? null;
 
             if ($fotoPerfil && $fotoPerfil['error'] === UPLOAD_ERR_OK) {
@@ -625,20 +589,6 @@ if ($metodoPeticion === 'POST') {
             );
             break;
 
-        case 'get_supervisores':
-            echo $TrabajadorController->getSupervisores();
-            break;
-
-        case 'eliminarAsignacionAsesorInmueble':
-            $trabajadorId = $data['trabajador_id'];
-            $inmuebleId = $data['inmueble_id'];
-            echo $TrabajadorController->eliminarAsignacionAsesorInmueble($trabajadorId, $inmuebleId);
-            break;
-
-        case 'eliminarLogicoAsesor':
-            $id =  $data['id'];
-            echo $TrabajadorController->eliminarLogicoAsesor($id);
-            break;
         // ----------------------
         // Clientes
         // ----------------------
@@ -1714,57 +1664,72 @@ if ($metodoPeticion === 'POST') {
             echo $CitasController->getCita($id);
             break;
 
+        case 'getCita_Con_Horario':
+            $id = $data['id'];
+            echo $CitasController->getCitaConHorario($id);
+            break;
+
         case 'listar_citas':
             echo $CitasController->getCitas();
             break;
 
         case 'updateCita':
-            $citas_id =          $data['id'];
-            $citas_fecha =       $data['fecha'];
-            $citas_dni =         $data['dni'];
-            $citas_nombre =     $data['nombre'];
-            $citas_procedencia = $data['procedencia'];
-            $citas_descripcion = $data['descripcion'];
-            $citas_precio =     $data['precio'];
-            $citas_estado =     $data['estado'];
-            $citas_consultorio = $data['consultorio'];
-            $cita_preciogeneral = $data['precio_general'] ?? '';
-            $cita_preciofinal = $data['precio_final'] ?? '';
+            $citas_id = $data['id'];
+            $citas_fecha = $data['fecha'];
+            $citas_dni = $data['dni'];
+            $citas_nombre = $data['nombre'];
+            $cita_celular = $data['celular'] ?? '';
+            $citas_procedencia = $data['procedencia'] ?? '';
+            $citas_descripcion = $data['descripcion'] ?? '';
+            $citas_precio = $data['precio'] ?? 0;
+            $citas_estado = $data['estado'] ?? '';
+            $citas_consultorio = $data['consultorio'] ?? '';
+            $cita_preciogeneral = $data['preciogeneral'] ?? 0;
+            $cita_preciofinal = $data['preciofinal'] ?? 0;
+            $horario_id = $data['horario_id'] ?? null;
+            
             echo $CitasController->updateCita(
                 $citas_id,
                 $citas_fecha,
                 $citas_dni,
                 $citas_nombre,
+                $cita_celular,
                 $citas_procedencia,
                 $citas_descripcion,
                 $citas_precio,
                 $citas_estado,
                 $citas_consultorio,
                 $cita_preciogeneral,
-                $cita_preciofinal
+                $cita_preciofinal,
+                $horario_id
             );
             break;
 
         case 'add_cita':
-            $citas_fecha =       $data['fecha'];
-            $citas_dni =         $data['dni'];
-            $citas_nombre =     $data['nombre'];
-            $citas_procedencia = $data['procedencia'];
-            $citas_descripcion = $data['descripcion'];
-            $citas_precio =     $data['precio'];
-            $citas_consultorio = $data['consultorio'];
-            $cita_preciogeneral = $data['precio_general'] ?? '';
-            $cita_preciofinal = $data['precio_final'] ?? '';
+            $citas_fecha = $data['fecha'];
+            $citas_dni = $data['dni'];
+            $citas_nombre = $data['nombre'];
+            $cita_celular = $data['celular'] ?? '';
+            $citas_procedencia = $data['procedencia'] ?? '';
+            $citas_descripcion = $data['descripcion'] ?? '';
+            $citas_precio = $data['precio'] ?? 0;
+            $citas_consultorio = $data['consultorio'] ?? '';
+            $cita_preciogeneral = $data['preciogeneral'] ?? 0;
+            $cita_preciofinal = $data['preciofinal'] ?? 0;
+            $horario_id = $data['horario_id'];
+            
             echo $CitasController->insertCita(
                 $citas_fecha,
                 $citas_dni,
                 $citas_nombre,
+                $cita_celular,
                 $citas_procedencia,
                 $citas_descripcion,
                 $citas_precio,
                 $citas_consultorio,
                 $cita_preciogeneral,
-                $cita_preciofinal
+                $cita_preciofinal,
+                $horario_id
             );
             break;
 
@@ -1785,47 +1750,18 @@ if ($metodoPeticion === 'POST') {
             echo $CitasController->getHorariosDisponibles($fecha);
             break;
 
-        case 'verificarDisponibilidad':
+        case 'getCitasPorFecha':
             $fecha = $data['fecha'];
-            $horario = $data['horario'];
-            echo $CitasController->verificarDisponibilidad($fecha, $horario);
+            echo $CitasController->getCitasPorFecha($fecha);
             break;
 
-        case 'getHorariosParaChatbot':
-            $fecha = $data['fecha'];
-            echo $CitasController->getHorariosParaChatbot($fecha);
-            break;
-
-        case 'asignarCitaAHorario':
-            $citas_id = $data['citas_id'];
+        case 'asignarHorarioCita':
+            $cita_id = $data['cita_id'];
             $horario_id = $data['horario_id'];
-            echo $CitasController->asignarCitaAHorario($citas_id, $horario_id);
+            echo $CitasController->asignarHorarioCita($cita_id, $horario_id);
             break;
 
-        case 'liberarHorario':
-            $horario_id = $data['horario_id'];
-            echo $CitasController->liberarHorario($horario_id);
-            break;
-
-        case 'generarHorariosAtencion':
-            $fecha = $data['fecha'];
-            $horario_manana_inicio = $data['horario_manana_inicio'] ?? '07:00';
-            $horario_manana_fin = $data['horario_manana_fin'] ?? '13:00';
-            $horario_tarde_inicio = $data['horario_tarde_inicio'] ?? '16:00';
-            $horario_tarde_fin = $data['horario_tarde_fin'] ?? '19:00';
-            echo $CitasController->generarHorariosAtencion(
-                $fecha,
-                $horario_manana_inicio,
-                $horario_manana_fin,
-                $horario_tarde_inicio,
-                $horario_tarde_fin
-            );
-            break;
-
-        case 'getHorariosConfigurados':
-            $fecha = $data['fecha'] ?? null;
-            echo $CitasController->getHorariosConfigurados($fecha);
-            break;
+      
 
     // -------------------------------------------------------------------------------------
     // pagos
