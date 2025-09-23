@@ -112,37 +112,40 @@ class CitasController {
         $citas_consultorio,
         $cita_preciogeneral,
         $cita_preciofinal,
-        $horario_id = null
+        $horario_id
     ) {
         $conexion = new Conexion();
 
-        // Si se proporciona un nuevo horario, validar disponibilidad
-        if ($horario_id !== null) {
-            // Verificar si el horario existe
-            $queryHorario = "SELECT COUNT(*) as total FROM horarios WHERE hora_id = $horario_id";
-            $resultHorario = $conexion->ejecutarConsulta($queryHorario);
-            $horarioExiste = $resultHorario->fetch_assoc()['total'] > 0;
-            
-            if (!$horarioExiste) {
-                response::error('El horario seleccionado no existe');
-                return;
-            }
-            
-            // Verificar si el horario ya está ocupado para esa fecha (excluyendo la cita actual)
-            $queryOcupado = "SELECT COUNT(*) as total 
-                            FROM horadiacita hdc
-                            INNER JOIN citas c ON hdc.hdc_citaId = c.citas_id
-                            WHERE hdc.hdc_horarioId = $horario_id 
-                            AND c.citas_fecha = '$citas_fecha' 
-                            AND c.citas_estado != 'cancelada'
-                            AND c.citas_id != $citas_id";
-            $resultOcupado = $conexion->ejecutarConsulta($queryOcupado);
-            $horarioOcupado = $resultOcupado->fetch_assoc()['total'] > 0;
-            
-            if ($horarioOcupado) {
-                response::error('El horario seleccionado ya está ocupado para esta fecha. Por favor, elija otro horario.');
-                return;
-            }
+        // Validar que se proporcione un horario (OBLIGATORIO)
+        if ($horario_id === null || $horario_id === '' || $horario_id === 0) {
+            response::error('Debe seleccionar un horario para la cita. El horario es obligatorio.');
+            return;
+        }
+
+        // Verificar si el horario existe
+        $queryHorario = "SELECT COUNT(*) as total FROM horarios WHERE hora_id = $horario_id";
+        $resultHorario = $conexion->ejecutarConsulta($queryHorario);
+        $horarioExiste = $resultHorario->fetch_assoc()['total'] > 0;
+        
+        if (!$horarioExiste) {
+            response::error('El horario seleccionado no existe');
+            return;
+        }
+        
+        // Verificar si el horario ya está ocupado para esa fecha (excluyendo la cita actual)
+        $queryOcupado = "SELECT COUNT(*) as total 
+                        FROM horadiacita hdc
+                        INNER JOIN citas c ON hdc.hdc_citaId = c.citas_id
+                        WHERE hdc.hdc_horarioId = $horario_id 
+                        AND c.citas_fecha = '$citas_fecha' 
+                        AND c.citas_estado != 'cancelada'
+                        AND c.citas_id != $citas_id";
+        $resultOcupado = $conexion->ejecutarConsulta($queryOcupado);
+        $horarioOcupado = $resultOcupado->fetch_assoc()['total'] > 0;
+        
+        if ($horarioOcupado) {
+            response::error('El horario seleccionado ya está ocupado para esta fecha. Por favor, elija otro horario.');
+            return;
         }
 
         // Actualizar la cita
@@ -163,22 +166,25 @@ class CitasController {
         $result = $conexion->save($query);
 
         if ($result > 0) {
-            // Si se proporciona un nuevo horario, actualizar la relación
-            if ($horario_id !== null) {
-                // Eliminar la relación anterior
+            // Actualizar la relación del horario (SIEMPRE se ejecuta porque es obligatorio)
+            // Verificar si la cita ya tiene un horario asignado
+            $queryExisteRelacion = "SELECT COUNT(*) as total FROM horadiacita WHERE hdc_citaId = $citas_id";
+            $resultExisteRelacion = $conexion->ejecutarConsulta($queryExisteRelacion);
+            $existeRelacion = $resultExisteRelacion->fetch_assoc()['total'] > 0;
+            
+            if ($existeRelacion) {
+                // Si ya existe una relación, eliminarla primero
                 $conexion->save("DELETE FROM horadiacita WHERE hdc_citaId = $citas_id");
-                
-                // Insertar la nueva relación
-                $queryInsertHorario = "INSERT INTO horadiacita (hdc_horarioId, hdc_citaId) VALUES ($horario_id, $citas_id)";
-                $resultHorario = $conexion->insertar($queryInsertHorario);
-                
-                if ($resultHorario > 0) {
-                    response::success($result, 'Cita y horario actualizados correctamente');
-                } else {
-                    response::error('Cita actualizada pero error al asignar el nuevo horario');
-                }
+            }
+            
+            // Insertar la nueva relación
+            $queryInsertHorario = "INSERT INTO horadiacita (hdc_horarioId, hdc_citaId) VALUES ($horario_id, $citas_id)";
+            $resultHorario = $conexion->insertar($queryInsertHorario);
+            
+            if ($resultHorario > 0) {
+                response::success($result, 'Cita y horario actualizados correctamente');
             } else {
-                response::success($result, 'Cita actualizada correctamente');
+                response::error('Cita actualizada pero error al asignar el nuevo horario');
             }
         } else {
             response::error('Error al actualizar la cita');
@@ -290,6 +296,12 @@ class CitasController {
 
     public function deleteCita($id) {
         $conexion = new Conexion();
+        
+        // Primero eliminar las relaciones de horarios
+        $queryDeleteHorario = "DELETE FROM horadiacita WHERE hdc_citaId = $id";
+        $conexion->save($queryDeleteHorario);
+        
+        // Luego eliminar la cita
         $query = "DELETE FROM citas WHERE citas_id = $id";
         $result = $conexion->save($query);
 
