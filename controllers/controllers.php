@@ -3,7 +3,6 @@
     require_once 'controller_empresa.php';
     require_once 'controller_webOperaciones.php';
     require_once 'controller_Trabajador.php';
-    require_once 'controller_Inmueble.php';
     require_once 'controller_apiSunat.php';
     require_once 'controller_ubigeo.php';
     require_once 'controller_landingFotos.php';
