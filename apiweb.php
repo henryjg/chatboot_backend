@@ -52,23 +52,18 @@ if ($tipoContenidoPeticion === "application/json") {
 
 $WebController          = new WebController();
 $TrabajadorController   = new TrabajadorController();
-// $ClienteController      = new ControladorCliente();
-$InmuebleController     = new ControladorInmueble();
-// $ContratoController     = new ControladorContrato();
-// $PropietarioController  = new PropietarioController();
+
 $SUNAT                  = new apiSunat();
 $ControladorUbigeo      = new ControladorUbigeo();
 $EmpresaController      = new EmpresaController();
 $LandingWeb             = new LandingWebController();
 $LandingFotos           = new LandingFotosController();
-// $Operaciones            = new OperacionController();
 $ArchivosController     = new ArchivosController();
 $SliderController       = new SliderController();
 $NoticiasController     = new NoticiasController();
 $DocumentosController   = new DocumentosController();
 $ServicioController     = new ServicioController();
 $CategoriasController   = new CategoriasController();
-// $ControladorGenerado    = new ContratoGeneradoController();
 
 // ----------------------
 // Procesamiento de la petición
