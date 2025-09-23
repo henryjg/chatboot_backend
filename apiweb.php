@@ -64,6 +64,9 @@ $NoticiasController     = new NoticiasController();
 $DocumentosController   = new DocumentosController();
 $ServicioController     = new ServicioController();
 $CategoriasController   = new CategoriasController();
+$CitasController        = new CitasController();
+$PagosController        = new PagosController();
+// $ControladorGenerado    = new ContratoGeneradoController();
 
 // ----------------------
 // Procesamiento de la petición
@@ -497,42 +500,6 @@ if ($metodoPeticion === 'POST') {
             echo $TrabajadorController->getTrabajadores();
             break;
 
-       case 'get_asesores_general':
-            $asesorId = $data['asesorId'] ?? null;
-            $supervisorId = $data['supervisorId'] ?? null;
-            $inmuebleId = $data['inmuebleId'] ?? null;
-            echo $TrabajadorController->get_Asesores_General($asesorId, $supervisorId, $inmuebleId);
-            break;
-            
-
-        case 'get_asesores':
-            echo $TrabajadorController->getAsesores();
-            break;
-
-        case 'get_asesores_asignado':
-            $inmuebleId     =  $data['inmuebleId'];
-            echo $TrabajadorController->getAsesores_asignado($inmuebleId);
-            break;
-
-        case 'delete_asesorAsignado':
-            $asig_id   =  $data['id'];
-            echo $TrabajadorController->eliminarAsesorAsignado($asig_id);
-            break;            
-
-        case 'delete_asesor':
-            $trabajadorId = $data['trabajadorId'];
-            $inmuebleId = $data['inmuebleId'];
-            $comentario = $data['comentario'];
-            echo $TrabajadorController->quitar_asignacion($trabajadorId, $inmuebleId, $comentario);
-            break; 
-
-        case 'asignar_Asesor':
-            $trabajadorId = $data['trabajadorId'];
-            $inmuebleId = $data['inmuebleId'];
-            $tipoAsignacion = $data['tipoAsignacion'];
-            echo $TrabajadorController->Asignar_Asesor($trabajadorId, $inmuebleId, $tipoAsignacion);
-            break;
-
         case 'del_trabajador':
             $id =  $data['id'];
             echo $TrabajadorController->updateEstadoTrabajador($id,"Inactivo");
@@ -563,12 +530,12 @@ if ($metodoPeticion === 'POST') {
             $dni = $data['dni'];
             $nombre = $data['nombre'];
             $apellidos = $data['apellidos'];
-            $cargo = $data['cargo'];
+            $cargo = $data['cargo']?? null;
             $supervisor = $data['supervisor_id'] ?? null;
-            $correo = $data['correo'];
-            $telefono = $data['telefono'];
+            $correo = $data['email'];
+            $telefono = $data['celular'];
             $celular = $data['celular'];
-            $fnacimiento = $data['fnacimiento'];
+            $fnacimiento = $data['fechaNacimiento'];
             $fotoPerfil = $_FILES['fotoPerfil'] ?? null;
 
             if ($fotoPerfil && $fotoPerfil['error'] === UPLOAD_ERR_OK) {
@@ -598,6 +565,7 @@ if ($metodoPeticion === 'POST') {
             $apellidos =  $data['apellidos'];
             $cargo =  $data['cargo'];
             $supervisor = $data['supervisor_id'] ?? null;
+            $rol =  $data['rol'] ?? null;
             $correo =  $data['correo'];
             $telefono =  $data['telefono'];
             $celular =  $data['celular'];
@@ -611,437 +579,10 @@ if ($metodoPeticion === 'POST') {
             }
             
             echo $TrabajadorController->updateTrabajador($id,
-                $dni,$nombre,$apellidos,$correo,$cargo,$supervisor,$telefono,
+                $dni,$nombre,$apellidos,$correo,$cargo,$supervisor,
+                $rol, $telefono,
                 $celular,$fnacimiento,$fotoPerfil
             );
-            break;
-
-        case 'get_supervisores':
-            echo $TrabajadorController->getSupervisores();
-            break;
-
-        case 'eliminarAsignacionAsesorInmueble':
-            $trabajadorId = $data['trabajador_id'];
-            $inmuebleId = $data['inmueble_id'];
-            echo $TrabajadorController->eliminarAsignacionAsesorInmueble($trabajadorId, $inmuebleId);
-            break;
-
-        case 'eliminarLogicoAsesor':
-            $id =  $data['id'];
-            echo $TrabajadorController->eliminarLogicoAsesor($id);
-            break;
-
-        // ----------------------
-        // Características GENERAL DE INMUEBLE
-        // ----------------------
-        case 'add_caracteristica':
-            $nombre =  $data['nombre'];
-            echo $InmuebleController->insertCaracteristica($nombre);
-            break;
-
-        case 'del_caracteristica':
-            $id =  $data['id'];
-            $id_ca =  $data['id_caracteristica'];
-            echo $InmuebleController->deleteCaracteristica($id,$id_ca);
-            break;
-
-        case 'get_caracteristicas':
-            echo $InmuebleController->getCaracteristicas();
-            break;
-
-      
-            // ----------------------
-        // Características GENERAL DE INMUEBLE
-        // ----------------------
-
-        case 'add_caracteristicaInmueble':
-            $descripcion  =  $data['descripcion'];
-            $idcarac    =  $data['idcarac'];
-            $idinmueble =  $data['idinmueble'];
-            echo $InmuebleController->insertCaracteristica_Inmueble($idcarac, $idinmueble,$descripcion);
-            break;
-
-        // case 'del_caracteristicaInmueble':
-        //     $idcar = $data['id'] ?? null;
-        //     if ($idcar) {
-        //         echo $InmuebleController->deleteCaracteristica($idcar);
-        //     } else {
-        //         Response::error('ID no proporcionado para eliminar característica');
-        //     }
-        //     break;
-
-        case 'del_caracteristicaInmueble':
-            $idcarac = $data['idcarac'];
-            $idinmueble = $data['id_inmueble'];
-            echo $InmuebleController->deleteCaracteristica($idcarac, $idinmueble);
-            break;
-
-        case 'get_caracteristicaInmueble':
-            $idinmueble =  $data['idinmueble'];
-            echo $InmuebleController->getCaracteristicas_Inmueble($idinmueble);
-            break;
-        case 'get_caracteristicaInmueble_detalles':
-            $idinmueble =  $data['idinmueble'];
-            echo $InmuebleController->getCaracteristicas_Inmueble_Detalles($idinmueble);
-            break;
-    
-
-        //- ----- RELACION --------------
-        
-
-         // ----------------------
-        // Inmuebles
-        // ----------------------
-        case 'get_lista_inmuebles':
-            echo $InmuebleController->getInmuebles();
-            break;
-
-        case 'getInmueblesPorEstado':
-            $estado = $data['estado'];
-            echo $InmuebleController->getInmueblesPorEstado($estado);
-            break;
-
-        case 'getInmuebles_web':
-            echo $InmuebleController->getInmuebles_web();
-            break;
-
-        case 'get_inmueble':
-            $id =  $data['id'];
-            echo $InmuebleController->getInmueble($id);
-            break;
-
-        case 'get_proyecto':
-            $id =  $data['id'];
-            echo $InmuebleController->getProyecto($id);
-            break;
-
-        case 'getinmueble_asesor':
-            $id = $data['id'];
-            echo $InmuebleController->getInmueblesPorAsesor($id);
-            break;
-
-        case 'get_full_info_inmueble':
-            $id =  $data['id'];
-            echo $InmuebleController->getInmueble_web($id);
-            break;
-
-        case 'obtenerInmuebleDatos':
-            $inmu_id = $data['id'];
-            echo $InmuebleController->obtenerInmuebleDatos($inmu_id);
-            break;
-
-        case 'get_lista_inmueble_filtro':
-            $filters = [
-                'inmu_tipobien' => $data['tipobien'] ?? null,
-                // 'inmu_ubigeo' => $data['ubigeo'] ?? null,
-                'inmu_condicioncontrato' => $data['condicioncontrato'] ?? null,
-                'inmu_tipooperacion' => $data['tipooperacion'] ?? null,
-            ];
-            echo $InmuebleController->get_Lista_Inmueble_web_filters($filters);
-            break;
-
-        case 'get_lista_inmueble_foto':
-            echo $InmuebleController->get_Lista_Inmueble_web();
-            break;
-
-        case 'get_Lista_Inmueble_paneladmin':
-            echo $InmuebleController->get_Lista_Inmueble_paneladmin();
-            break;
-    
-        case 'del_inmueble':
-            try {
-                $id = $data['id'] ?? null;
-                if (!$id) {
-                    throw new Exception('ID no proporcionado');
-                }
-                echo $InmuebleController->delete_Inmueble($id);
-            } catch (Exception $e) {
-                Response::error('Error al eliminar inmueble: ' . $e->getMessage());
-            }
-            break;
-
-        case 'eliminarLogicoInmueble':
-            $inmu_id = $data['id'];
-            echo $InmuebleController->eliminarLogicoInmueble($inmu_id);
-            break;
-
-        case 'add_inmueble':
-            $tipobien =         $data['tipobien'];
-            $titulo =           $data['titulo'];
-            $descripcion =      $data['descripcion'];
-            $areaterreno =      $data['areaterreno'];
-            $areaconstruida =   $data['areaconstruida'];
-            $condicioncontrato =$data['condicioncontrato'];
-            $partidaregistral = $data['partidaregistral'];
-            $tipooperacion =    $data['tipooperacion'];
-            $precio =           $data['precio'];
-            $moneda =           $data['moneda'];
-            $ubigeo =           $data['ubigeo'];
-            $direccion =        $data['direccion'];
-            $latitud =          $data['latitud'];
-            $long =             $data['longitud'];
-            $video =            $data['video'];
-            $categoria =         $data['categoria'];
-            $largo =           $data['largo'];
-            $ancho =           $data['ancho'];
-            $idasesor =         $data['asesorId'];
-            $propietario_id =  $data['propietarioId'];
-
-            echo $InmuebleController->insertInmueble(
-                $tipobien,
-                $titulo,
-                $descripcion,
-                $areaterreno,
-                $areaconstruida,
-                $condicioncontrato,
-                $partidaregistral,
-                $tipooperacion,
-                $precio,
-                $moneda,
-                $direccion,
-                $ubigeo,
-                $latitud,
-                $long,
-                $video,
-                $categoria,
-                $largo,
-                $ancho,
-                $idasesor,
-                $propietario_id
-              );
-            break;
-
-        case 'crearInmueblePropietarioYContrato':
-            $inmu_titulo = $data['titulo'];
-            $propietario_id = $data['propietarioId'];
-            $asesor_id = $data['asesorId'];
-
-            echo $InmuebleController->crearInmueblePropietarioYContrato(
-                $inmu_titulo,
-                $propietario_id,
-                $asesor_id
-            );
-            break;
-            
-        case 'add_proyecto':
-            $tipobien =         $data['tipobien'];
-            $titulo =           $data['titulo'];
-            $descripcion =      $data['descripcion'];
-            $areaterreno =      $data['areaterreno'];
-            $areaconstruida =   $data['areaconstruida'];
-            $condicioncontrato =$data['condicioncontrato'];
-            $tipooperacion =    $data['tipooperacion'];
-            $precio =           $data['precio'];
-            $moneda =           $data['moneda'];
-            $ubigeo =           $data['ubigeo'];
-            $direccion =        $data['direccion'];
-            $latitud =          $data['latitud'];
-            $long =             $data['longitud'];
-            $video =            $data['video'];
-            $categoria =         $data['categoria'];
-            $largo =           $data['largo'];
-            $ancho =           $data['ancho'];
-            $slogan =           $data['slogan'] ?? null;
-            $sector1 =         $data['sector1'] ?? null;
-            $sector2 =         $data['sector2'] ?? null;
-            $sector3 =         $data['sector3'] ?? null;
-
-            echo $InmuebleController->insertProyecto(
-                $tipobien,
-                $titulo,
-                $descripcion,
-                $areaterreno,
-                $areaconstruida,
-                $tipooperacion,
-                $precio,
-                $moneda,
-                $direccion,
-                $ubigeo,
-                $latitud,
-                $long,
-                $video,
-                $categoria,
-                $largo,
-                $ancho,
-                $slogan,
-                $sector1,
-                $sector2,
-                $sector3
-              );
-            break;
-        
-        case 'upd_inmueble':
-            $inmu_id =          $data['id'];
-            $tipobien =         $data['tipobien'];
-            $titulo =           $data['titulo'];
-            $descripcion =      $data['descripcion'];
-            $areaterreno =      $data['areaterreno'];
-            $areaconstruida =   $data['areaconstruida'];
-            $condicioncontrato =$data['condicioncontrato'];
-            $partidaregistral = $data['partidaregistral'];
-            $tipooperacion =    $data['tipooperacion'];
-            $precio =           $data['precio'];
-            $moneda =           $data['moneda'];
-            
-            $ubigeo =           $data['ubigeo'];
-            $direccion =        $data['direccion'];
-            $latitud =          $data['latitud'];
-            $long =             $data['longitud'];
-            $video =            $data['video'];
-            $categoria =         $data['categoria'];
-            $largo =           $data['largo'];
-            $ancho =           $data['ancho'];
-
-            echo $InmuebleController->updateInmueble(
-                $inmu_id,
-                $tipobien,
-                $titulo,
-                $descripcion,
-                $areaterreno,
-                $areaconstruida,
-                $condicioncontrato,
-                $partidaregistral,
-                $tipooperacion,
-                $precio,
-                $moneda,
-                $direccion,
-                $ubigeo,
-                $latitud,
-                $long,
-                $video,
-                $categoria,
-                $largo,
-                $ancho
-                );
-            break;
-        
-            case 'upd_proyecto':
-                $inmu_id =          $data['id'];
-                $tipobien =         $data['tipobien'];
-                $titulo =           $data['titulo'];
-                $descripcion =      $data['descripcion'];
-                $areaterreno =      $data['areaterreno'];
-                $areaconstruida =   $data['areaconstruida'];
-                $condicioncontrato =$data['condicioncontrato'];
-                $tipooperacion =    $data['tipooperacion'];
-                $precio =           $data['precio'];
-                $moneda =           $data['moneda'];
-                $ubigeo =           $data['ubigeo'];
-                $direccion =        $data['direccion'];
-                $latitud =          $data['latitud'];
-                $long =             $data['longitud'];
-                $video =            $data['video'];
-                $categoria =         $data['categoria'];
-                $largo =           $data['largo'];
-                $ancho =           $data['ancho'];
-                $slogan =           $data['slogan'];
-                $sector1 =         $data['sector1'];
-                $sector2 =         $data['sector2'];
-                $sector3 =         $data['sector3'];
-
-                echo $InmuebleController->updateProyecto(
-                    $inmu_id,
-                    $tipobien,
-                    $titulo,
-                    $descripcion,
-                    $areaterreno,
-                    $areaconstruida,
-                    $condicioncontrato,
-                    $tipooperacion,
-                    $precio,
-                    $moneda,
-                    $direccion,
-                    $ubigeo,
-                    $latitud,
-                    $long,
-                    $video,
-                    $categoria,
-                    $largo,
-                    $ancho,
-                    $slogan,
-                    $sector1,
-                    $sector2,
-                    $sector3
-                    );
-                break;    
-        
-        case 'get_proyectos':
-            echo $InmuebleController->getProyectos();
-            break;
-
-        case 'get_Lista_proyectos_paneladmin':
-            echo $InmuebleController->get_Lista_Proyecto_paneladmin();
-            break;
-
-        case 'add_updPrecio':
-            $id =      $data['id'];
-            $precio =  $data['precio'];
-            echo $InmuebleController->updateInmueblePrecio($id, $precio);
-            break;
-            
-        case 'add_updEstado':
-            $id =      $data['id'];
-            $estado =  $data['estado'];
-            echo $InmuebleController->updateInmuebleEstado($id, $estado);
-            break;
-        
-        case 'add_fotoInmueble':
-            $idinmueble =  $data['idinmueble'];
-            $file =        $_FILES['file'];
-            echo $InmuebleController->subirFoto($idinmueble, $file);
-            break;
-
-        case 'get_fotos_Inmueble':
-            $idinmueble =  $data['idinmueble'];
-            echo $InmuebleController->getFotosInmueble($idinmueble);
-            break;
-        case 'del_foto_Inmueble':
-            $idinmueble =  $data['idinmueble'];
-            echo $InmuebleController->deleteFotoInmueble($idinmueble);
-            break;
-
-        case 'getTiposOperacion':
-            echo $InmuebleController->getTiposOperacion();
-            break;
-
-        case 'getTiposBien':
-            echo $InmuebleController->getTiposBien();
-            break;
-
-        case 'get_TiposBien':
-            echo $InmuebleController->get_TiposBien();
-            break;
-
-        case 'get_TiposOperacion':
-            echo $InmuebleController->get_TiposOperacion();
-            break;
-
-        case 'get_TiposCondicion':
-            echo $InmuebleController->get_TiposCondicion();
-            break;
-
-        case 'getListados':
-            echo $InmuebleController->getListados();
-            break;
-
-        case 'getUbigeoPiura':
-            echo $InmuebleController->getUbigeoPiura();
-            break;
-
-        case 'getUbigeo_existentes':
-            echo $InmuebleController->getUbigeoPiura_existentes();
-            break;
-        
-        case 'getCondicionesContrato':
-            echo $InmuebleController->getCondicionesContrato();
-            break;
-
-        case 'getTotalProyectos':
-            echo $InmuebleController->getTotalInmueblesPanelAdmin();
-            break;
-
-        case 'getTotalInmuebles':
-            echo $InmuebleController->getTotalInmueblesWeb();
             break;
 
         // ----------------------
@@ -2109,7 +1650,180 @@ if ($metodoPeticion === 'POST') {
             $cliente_id = $data['cliente_id'];
             echo $DocumentosController->getDocumentosPorCliente($cliente_id);
             break;
-       
+
+    // -------------------------------------------------------------------------------------
+    // citas
+    // -------------------------------------------------------------------------------------
+
+        case 'getCita':
+            $id = $data['id'];
+            echo $CitasController->getCita($id);
+            break;
+
+        case 'getCita_Con_Horario':
+            $id = $data['id'];
+            echo $CitasController->getCitaConHorario($id);
+            break;
+
+        case 'listar_citas':
+            echo $CitasController->getCitas();
+            break;
+
+        case 'updateCita':
+            $citas_id = $data['id'];
+            $citas_fecha = $data['fecha'];
+            $citas_dni = $data['dni'];
+            $citas_nombre = $data['nombre'];
+            $cita_celular = $data['celular'] ?? '';
+            $citas_procedencia = $data['procedencia'] ?? '';
+            $citas_descripcion = $data['descripcion'] ?? '';
+            $citas_precio = $data['precio'] ?? 0;
+            $citas_estado = $data['estado'] ?? '';
+            $citas_consultorio = $data['consultorio'] ?? '';
+            $cita_preciogeneral = $data['preciogeneral'] ?? 0;
+            $cita_preciofinal = $data['preciofinal'] ?? 0;
+            $horario_id = $data['horario_id'] ?? null;
+            
+            echo $CitasController->updateCita(
+                $citas_id,
+                $citas_fecha,
+                $citas_dni,
+                $citas_nombre,
+                $cita_celular,
+                $citas_procedencia,
+                $citas_descripcion,
+                $citas_precio,
+                $citas_estado,
+                $citas_consultorio,
+                $cita_preciogeneral,
+                $cita_preciofinal,
+                $horario_id
+            );
+            break;
+
+        case 'add_cita':
+            $citas_fecha = $data['fecha'];
+            $citas_dni = $data['dni'];
+            $citas_nombre = $data['nombre'];
+            $cita_celular = $data['celular'] ?? '';
+            $citas_procedencia = $data['procedencia'] ?? '';
+            $citas_descripcion = $data['descripcion'] ?? '';
+            $citas_precio = $data['precio'] ?? 0;
+            $citas_consultorio = $data['consultorio'] ?? '';
+            $cita_preciogeneral = $data['preciogeneral'] ?? 0;
+            $cita_preciofinal = $data['preciofinal'] ?? 0;
+            $horario_id = $data['horario_id'];
+            
+            echo $CitasController->insertCita(
+                $citas_fecha,
+                $citas_dni,
+                $citas_nombre,
+                $cita_celular,
+                $citas_procedencia,
+                $citas_descripcion,
+                $citas_precio,
+                $citas_consultorio,
+                $cita_preciogeneral,
+                $cita_preciofinal,
+                $horario_id
+            );
+            break;
+
+        case 'deleteCita':
+            $cita_id = $data['id'];
+            echo $CitasController->deleteCita($cita_id);
+            break;
+
+        case 'updateEstadoCita':
+            $cita_id = $data['id'];
+            $citas_estado = $data['estado'];
+            echo $CitasController->updateEstado($cita_id, $citas_estado);
+            break;
+
+        // Endpoints específicos para el chatbot y disponibilidad de horarios
+        case 'getHorariosDisponibles':
+            $fecha = $data['fecha'];
+            echo $CitasController->getHorariosDisponibles($fecha);
+            break;
+
+        case 'getCitasPorFecha':
+            $fecha = $data['fecha'];
+            echo $CitasController->getCitasPorFecha($fecha);
+            break;
+
+        case 'asignarHorarioCita':
+            $cita_id = $data['cita_id'];
+            $horario_id = $data['horario_id'];
+            echo $CitasController->asignarHorarioCita($cita_id, $horario_id);
+            break;
+
+      
+
+    // -------------------------------------------------------------------------------------
+    // pagos
+    // -------------------------------------------------------------------------------------
+
+        case 'getPago':
+            $id = $data['id'];
+            echo $PagosController->getPago($id);
+            break;
+
+        case 'listar_pagos':
+            echo $PagosController->getPagos();
+            break;
+
+        case 'updatePago':
+            $pago_id = $data['id'];
+            $pago_tipo = $data['tipo'];
+            $pago_monto = $data['monto'];
+            $pago_comentario = $data['comentario'] ?? '';
+            $pago_url = $data['url'] ?? '';
+            $pago_citaid = $data['cita_id'];
+            echo $PagosController->updatePago(
+                $pago_id,
+                $pago_tipo,
+                $pago_monto,
+                $pago_comentario,
+                $pago_url,
+                $pago_citaid
+            );
+            break;
+
+        case 'add_pago':
+            $pago_tipo = $data['tipo'];
+            $pago_monto = $data['monto'];
+            $pago_comentario = $data['comentario'] ?? '';
+            $pago_url = $data['url'] ?? '';
+            $pago_citaid = $data['cita_id'];
+            echo $PagosController->insertPago(
+                $pago_tipo,
+                $pago_monto,
+                $pago_comentario,
+                $pago_url,
+                $pago_citaid
+            );
+            break;
+
+        case 'deletePago':
+            $pago_id = $data['id'];
+            echo $PagosController->deletePago($pago_id);
+            break;
+
+        case 'getPagosPorCita':
+            $cita_id = $data['cita_id'];
+            echo $PagosController->getPagosPorCita($cita_id);
+            break;
+
+        case 'getTotalPagosPorCita':
+            $cita_id = $data['cita_id'];
+            echo $PagosController->getTotalPagosPorCita($cita_id);
+            break;
+
+        case 'getPagosPorTipo':
+            $tipo = $data['tipo'];
+            echo $PagosController->getPagosPorTipo($tipo);
+            break;
+
         default:
             Response::error('Petición no autorizada');
             break;
