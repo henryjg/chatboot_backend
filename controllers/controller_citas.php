@@ -307,11 +307,15 @@ class CitasController {
     public function deleteCita($id) {
         $conexion = new Conexion();
         
-        // Primero eliminar las relaciones de horarios
+        // Primero eliminar los pagos relacionados
+        $queryDeletePagos = "DELETE FROM pago WHERE pago_citaId = $id";
+        $conexion->save($queryDeletePagos);
+        
+        // Luego eliminar las relaciones de horarios
         $queryDeleteHorario = "DELETE FROM horadiacita WHERE hdc_citaId = $id";
         $conexion->save($queryDeleteHorario);
         
-        // Luego eliminar la cita
+        // Finalmente eliminar la cita
         $query = "DELETE FROM citas WHERE citas_id = $id";
         $result = $conexion->save($query);
 
