@@ -13,20 +13,25 @@ class CitasController {
     public function getCita($id) {
         $conexion = new Conexion();
         $query = "SELECT 
-                    citas_id as id,
-                    citas_fecha as fecha,
-                    citas_dni as dni,
-                    citas_nombre as nombre,
-                    cita_celular as celular,
-                    citas_procedencia as procedencia,
-                    citas_descripcion as descripcion,
-                    citas_precio as precio,
-                    citas_estado as estado,
-                    citas_consultorio as consultorio,
-                    cita_preciogeneral as preciogeneral,
-                    cita_preciofinal as preciofinal
-                FROM citas 
-                WHERE citas_id = '$id'";
+                    c.citas_id as id,
+                    c.citas_fecha as fecha,
+                    c.citas_dni as dni,
+                    c.citas_nombre as nombre,
+                    c.cita_celular as celular,
+                    c.citas_procedencia as procedencia,
+                    c.citas_descripcion as descripcion,
+                    c.citas_precio as precio,
+                    c.citas_estado as estado,
+                    c.citas_consultorio as consultorio,
+                    c.cita_preciogeneral as preciogeneral,
+                    c.cita_preciofinal as preciofinal,
+                    h.hora_fechainicio as hora_inicio,
+                    h.hora_fechafin as hora_fin,
+                    h.hora_id as horario_id
+                FROM citas c
+                LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
+                LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                WHERE c.citas_id = '$id'";
         $result = $conexion->ejecutarConsulta($query);
 
         if ($result && $result->num_rows > 0) {
@@ -72,20 +77,25 @@ class CitasController {
     public function getCitas() {
         $conexion = new Conexion();
         $query = "SELECT 
-                   citas_id as id,
-                   citas_fecha as fecha,
-                   citas_dni as dni,
-                   citas_nombre as nombre,
-                   cita_celular as celular,
-                   citas_procedencia as procedencia,
-                   citas_descripcion as descripcion,
-                   citas_precio as precio,
-                   citas_estado as estado,
-                   citas_consultorio as consultorio,
-                   cita_preciogeneral as preciogeneral,
-                   cita_preciofinal as preciofinal
-                FROM citas 
-                ORDER BY citas_fecha DESC, citas_id ASC";
+                   c.citas_id as id,
+                   c.citas_fecha as fecha,
+                   c.citas_dni as dni,
+                   c.citas_nombre as nombre,
+                   c.cita_celular as celular,
+                   c.citas_procedencia as procedencia,
+                   c.citas_descripcion as descripcion,
+                   c.citas_precio as precio,
+                   c.citas_estado as estado,
+                   c.citas_consultorio as consultorio,
+                   c.cita_preciogeneral as preciogeneral,
+                   c.cita_preciofinal as preciofinal,
+                   h.hora_fechainicio as hora_inicio,
+                   h.hora_fechafin as hora_fin,
+                   h.hora_id as horario_id
+                FROM citas c
+                LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
+                LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                ORDER BY c.citas_fecha DESC, h.hora_fechainicio ASC, c.citas_id ASC";
         $result = $conexion->ejecutarConsulta($query);
 
         if ($result && $result->num_rows > 0) {

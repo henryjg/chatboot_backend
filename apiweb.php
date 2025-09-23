@@ -462,6 +462,11 @@ if ($metodoPeticion === 'POST') {
             echo $TrabajadorController->updateEstadoTrabajador($id,"Inactivo");
             break;
 
+        case 'delete_trabajador_permanente':
+            $id =  $data['id'];
+            echo $TrabajadorController->deleteTrabajador($id);
+            break;
+
         case 'upd_trabajadorEstado':
             $id =  $data['id'];
             $estado =  $data['estado'];
@@ -542,6 +547,10 @@ if ($metodoPeticion === 'POST') {
             );
             break;
 
+        case 'deleteTrabajador':
+            $id =  $data['id'];
+            echo $TrabajadorController->deleteTrabajador($id);
+            break;
         
             case 'Subir_fotografia':
                 $fotoImg = $_FILES['archivo_foto'] ?? "";

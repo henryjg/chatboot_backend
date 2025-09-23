@@ -314,6 +314,38 @@ class TrabajadorController {
             response::error('Error al actualizar el estado del trabajador');
         }
     }
+
+    // ------------------------------------------------------
+    public function deleteTrabajador($tra_id) {
+        $conexion = new Conexion();
+        
+        // Verificar si el trabajador existe
+        $checkQuery = "SELECT COUNT(*) as count, tra_fotourl FROM trabajador WHERE tra_id = '$tra_id'";
+        $checkResult = $conexion->ejecutarConsulta($checkQuery);
+        $row = $checkResult->fetch_assoc();
+        
+        if ($row['count'] == 0) {
+            response::error('El trabajador no existe');
+            return;
+        }
+        
+        // Obtener la URL de la foto para eliminar el archivo
+        $tra_fotourl = $row['tra_fotourl'];
+        
+        // Eliminar el trabajador de la base de datos
+        $query = "DELETE FROM trabajador WHERE tra_id = '$tra_id'";
+        $result = $conexion->save($query);
+        
+        if ($result > 0) {
+            // Si la eliminación fue exitosa, intentar eliminar la foto del servidor
+            if (!empty($tra_fotourl) && $tra_fotourl !== 'uploads/trabajador/avatar.png' && file_exists('./' . $tra_fotourl)) {
+                unlink('./' . $tra_fotourl);
+            }
+            response::success($result, 'Trabajador eliminado correctamente');
+        } else {
+            response::error('Error al eliminar el trabajador');
+        }
+    }
   
     
     //---------------------------------------------------------------------------------
