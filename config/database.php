@@ -68,3 +68,8 @@ class conexion{
         return $res;
     }
 }
+
+// Crear una instancia global de la conexión para compatibilidad
+$conexionObj = new conexion();
+$database = $conexionObj->connectDB();
+?>

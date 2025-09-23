@@ -141,6 +141,15 @@
         <div class="test-section">
             <h2>🗄️ Test de Conexión a Base de Datos</h2>
             <?php
+            // Mostrar información del entorno
+            $esLocal = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1' || strpos($_SERVER['SERVER_NAME'], 'localhost') !== false);
+            
+            if ($esLocal) {
+                echo "<div class='status info'>🏠 Entorno detectado: LOCAL (XAMPP)</div>";
+            } else {
+                echo "<div class='status info'>🌐 Entorno detectado: PRODUCCIÓN (Hostinger)</div>";
+            }
+            
             // Intentar incluir el archivo de configuración de base de datos
             $db_config_path = __DIR__ . '/config/database.php';
             
@@ -148,27 +157,69 @@
                 echo "<div class='status success'>✅ Archivo de configuración de BD encontrado</div>";
                 
                 try {
+                    include_once __DIR__ . '/config/config.php';
+                    
+                    // Mostrar configuración (sin contraseña)
+                    echo "<div class='status info'>📋 Configuración de BD:<br>";
+                    echo "Servidor: " . SERVER . "<br>";
+                    echo "Usuario: " . USER . "<br>";
+                    echo "Base de datos: " . DB . "<br>";
+                    echo "Contraseña: " . (PASS ? "***configurada***" : "***vacía***") . "</div>";
+                    
+                    // Intentar conexión manual
+                    echo "<div class='status info'>🔄 Intentando conexión manual...</div>";
+                    
+                    $conexion_manual = @mysqli_connect(SERVER, USER, PASS, DB);
+                    
+                    if ($conexion_manual) {
+                        echo "<div class='status success'>✅ Conexión manual exitosa</div>";
+                        echo "<div class='status success'>✅ Base de datos '" . DB . "' encontrada</div>";
+                        echo "<div class='status info'>ℹ️ Versión MySQL: " . mysqli_get_server_info($conexion_manual) . "</div>";
+                        
+                        // Probar una consulta simple
+                        $resultado = @mysqli_query($conexion_manual, "SHOW TABLES");
+                        if ($resultado) {
+                            $num_tablas = mysqli_num_rows($resultado);
+                            echo "<div class='status success'>✅ Consulta de prueba exitosa - Tablas encontradas: $num_tablas</div>";
+                        }
+                        
+                        mysqli_close($conexion_manual);
+                    } else {
+                        $error = mysqli_connect_error();
+                        echo "<div class='status error'>❌ Error de conexión manual: $error</div>";
+                        
+                        // Diagnósticos específicos
+                        if (strpos($error, "Unknown database") !== false) {
+                            echo "<div class='status warning'>💡 La base de datos '" . DB . "' no existe. Verifica el nombre en tu panel de Hostinger.</div>";
+                        } elseif (strpos($error, "Access denied") !== false) {
+                            echo "<div class='status warning'>💡 Usuario o contraseña incorrectos. Verifica las credenciales en Hostinger.</div>";
+                        } elseif (strpos($error, "Can't connect") !== false) {
+                            echo "<div class='status warning'>💡 No se puede conectar al servidor. Verifica que el host sea correcto.</div>";
+                        }
+                    }
+                    
+                    // Ahora probar con la clase conexion
+                    echo "<div class='status info'>🔄 Probando con clase conexion...</div>";
                     include_once $db_config_path;
                     
-                    // Verificar si la variable $database está definida
                     if (isset($database) && $database instanceof mysqli) {
                         if ($database->ping()) {
-                            echo "<div class='status success'>✅ Conexión a la base de datos establecida correctamente</div>";
-                            echo "<div class='status info'>ℹ️ Servidor: " . $database->host_info . "</div>";
+                            echo "<div class='status success'>✅ Clase conexion funcionando correctamente</div>";
+                            echo "<div class='status info'>ℹ️ Info servidor: " . $database->host_info . "</div>";
                         } else {
-                            echo "<div class='status error'>❌ La conexión a la base de datos no responde</div>";
+                            echo "<div class='status error'>❌ La clase conexion no responde</div>";
                         }
                     } else {
                         echo "<div class='status warning'>⚠️ Variable \$database no encontrada o no es una instancia de mysqli</div>";
                     }
+                    
                 } catch (Exception $e) {
-                    echo "<div class='status error'>❌ Error al conectar con la base de datos: " . $e->getMessage() . "</div>";
+                    echo "<div class='status error'>❌ Error al cargar configuración: " . $e->getMessage() . "</div>";
                 }
             } else {
                 echo "<div class='status error'>❌ Archivo de configuración de BD no encontrado en: $db_config_path</div>";
             }
-            ?>
-        </div>
+            ?></div>
 
         <div class="test-section">
             <h2>📁 Test de Archivos del Proyecto</h2>
