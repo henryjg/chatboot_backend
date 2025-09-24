@@ -50,23 +50,15 @@ if ($tipoContenidoPeticion === "application/json") {
 // Importación de Controladores
 // ----------------------
 
-$WebController          = new WebController();
 $TrabajadorController   = new TrabajadorController();
-
 $SUNAT                  = new apiSunat();
 $ControladorUbigeo      = new ControladorUbigeo();
 $EmpresaController      = new EmpresaController();
-$LandingWeb             = new LandingWebController();
-$LandingFotos           = new LandingFotosController();
 $ArchivosController     = new ArchivosController();
-$SliderController       = new SliderController();
 $NoticiasController     = new NoticiasController();
-$DocumentosController   = new DocumentosController();
 $ServicioController     = new ServicioController();
 $CategoriasController   = new CategoriasController();
 $CitasController        = new CitasController();
-$PagosController        = new PagosController();
-// $ControladorGenerado    = new ContratoGeneradoController();
 
 // ----------------------
 // Procesamiento de la petición
@@ -75,76 +67,6 @@ if ($metodoPeticion === 'POST') {
     switch ($peticion) {
 
       
-        // ----------------------
-        // DESDE PORTAL WEB 
-        // ----------------------
-        case 'add_LeadContacto':
-            $cliente_numerodoc      =  $data['dni'];
-            $cliente_nombres        =  $data['nombres'];
-            $cliente_apellidos      =  $data['apellidos'];
-            $cliente_celular        =  $data['celular'];
-            $cliente_comentario     =  $data['asunto'];
-            $inmuebleId             =  $data['inmuebleId'];
-       
-            echo $ClienteController->insertCliente_ComoLead(
-                $cliente_numerodoc,
-                $cliente_nombres,
-                $cliente_apellidos,
-                $cliente_celular,
-                $cliente_comentario,
-                $inmuebleId 
-            );
-            break;
-        case 'add_FormContacto':
-            $nombre     =  $data['nombre'];
-            $apellidos  =  $data['apellidos'];
-            $asunto     =  $data['asunto'];
-            $correo     =  $data['correo'];
-            $celular    =  $data['celular'];            
-            $mensaje    =  $data['mensaje'];
-
-       
-            echo $WebController->insert_FormContact(
-                $nombre,
-                $apellidos,
-                $asunto,
-                $celular,
-                $correo,
-                $mensaje
-            );
-            break;
-
-        case 'getFormContact':
-            echo $WebController->get_FormContactos();
-            break;
-
-        case 'del_contacto':
-            $contacto_id = $data['id'];
-            echo $WebController->delete_FormContact($contacto_id);
-            break;
-
-        case 'upd_contacto':
-            $contacto_id = $data['id'];
-            $nombre     =  $data['nombre'];
-            $apellidos  =  $data['apellidos'];
-            $asunto     =  $data['asunto'];
-            $correo     =  $data['correo'];
-            $celular    =  $data['celular'];            
-            $mensaje    =  $data['mensaje'];
-            $estado     = $data['estado'];
-
-            echo $WebController->update_FormContact(
-                $contacto_id,
-                $nombre,
-                $apellidos,
-                $asunto,
-                $celular,
-                $correo,
-                $mensaje,
-                $estado
-            );
-            break;
-
         case 'get_Empresa':
             echo $EmpresaController->getEmpresa();
             break;
@@ -265,182 +187,18 @@ if ($metodoPeticion === 'POST') {
             $idservicio =  $data['id'];
             echo $ServicioController->deleteFotoServicio($idservicio);
             break;
-        // ------------------------------------------------
-                // Landing
-        // ------------------------------------------------
-
-        case 'getFotos':
-            echo $LandingFotos->getFotosLanding();
-            break;
-
-        case 'addFotos':
-            $foto_url = cleanfild($data['url']);
-            $foto_seccion = cleanfild($data['seccion']);
-            $foto_miniatura = cleanfild($data['miniatura']);
-            $landing_id = cleanfild($data['id']);
-            echo $LandingFotos->insertFotoLanding(
-                $foto_url,$foto_seccion,$foto_miniatura,$landing_id
-            );
-            break;
-
-        case 'deleteFotos':
-            $fotos_id = cleanfild($data['id']);
-            echo $LandingFotos->deleteFotoLanding($fotos_id);
-            break;
-
-        case 'updFotos':
-            $fotos_id = cleanfild($data['id']);
-            $foto_url = cleanfild($data['url']);
-            $foto_seccion = cleanfild($data['seccion']);
-            $foto_miniatura = cleanfild($data['miniatura']);
-            $landing_id = cleanfild($data['landingId']);
-            echo $LandingFotos->updateFotoLanding(
-                $fotos_id,$foto_url,$foto_seccion,$foto_miniatura,$landing_id
-            );
-            break;
-// ---------------------------------------------------------------------------------------------------
-        case 'getLW':
-            echo $LandingWeb->getLandingsWeb();
-            break;
-
-        case 'addLW':
-        $lw_nombre_pagina = cleanfild($data['nombrePagina']);
-        $lw_nombre_corto = cleanfild($data['nombreCorto']);
-        $lw_imagen_destacada_url = cleanfild($data['urlDestacada']);
-        $lw_metatag = cleanfild($data['metatag']);
-        $lw_celular1 = cleanfild($data['celular1']);
-        $lw_celular2 = cleanfild($data['celular2']);
-        $lw_direccion = cleanfild($data['direccion']);
-        $lw_email = cleanfild($data['email']);
-        $lw_fb = cleanfild($data['facebook']);
-        $lw_ig = cleanfild($data['instagram']);
-        $lw_yt = cleanfild($data['youtube']);
-        $lw_seccion1_titulo = cleanfild($data['s1Titulo']);
-        $lw_seccion1_slider = cleanfild($data['s1Slider']);
-        $lw_seccion2_titulo = cleanfild($data['s2Titulo']);
-        $lw_seccion2_subtitulo = cleanfild($data['s2Subtitulo']);
-        $lw_seccion2_descripcion = cleanfild($data['s2Descripcion']);
-        $lw_seccion3_titulo = cleanfild($data['s3Titulo']);
-        $lw_secion3_loteCant = cleanfild($data['s3LoteCant']);
-        $lw_seccion3_loteDimen = cleanfild($data['s3LoteDime']);
-        $lw_seccion3_lotePrecios = cleanfild($data['s3LotePrecios']);
-        $lw_seccion4_titulo = cleanfild($data['s4Titulo']);
-        $lw_secion4_sub = cleanfild($data['s4Subtitulo']);
-        $lw_seccion4_desc = cleanfild($data['s4Descripcion']);
-        $lw_seccion5_titulo = cleanfild($data['s5Titulo']);
-        $lw_seccion5_sub = cleanfild($data['s5Subtitulo']);
-        $lw_seccion5_des = cleanfild($data['s5Descripcion']);
-        $lw_seccion6_ubicacion = cleanfild($data['s6Ubicacion']);
-        $lw_seccion6_img = cleanfild($data['imagen']);
-        $lw_seccion7_nosotros = cleanfild($data['nosotros']);
-        echo $LandingWeb->insertLandingWeb(
-        $lw_nombre_pagina, 
-        $lw_nombre_corto, 
-        $lw_imagen_destacada_url,
-        $lw_metatag,
-        $lw_celular1, 
-        $lw_celular2, 
-        $lw_direccion, 
-        $lw_email, 
-        $lw_fb, 
-        $lw_ig, 
-        $lw_yt, 
-        $lw_seccion1_titulo,
-        $lw_seccion1_slider,
-        $lw_seccion2_titulo,
-        $lw_seccion2_subtitulo,
-        $lw_seccion2_descripcion,
-        $lw_seccion3_titulo,
-        $lw_secion3_loteCant,
-        $lw_seccion3_loteDimen,
-        $lw_seccion3_lotePrecios,
-        $lw_seccion4_titulo,
-        $lw_secion4_sub,
-        $lw_seccion4_desc,
-        $lw_seccion5_titulo,
-        $lw_seccion5_sub,
-        $lw_seccion5_des,
-        $lw_seccion6_ubicacion,
-        $lw_seccion6_img,
-        $lw_seccion7_nosotros
-        );
-        break;
-
-        case 'deleteLW':
-            $landing_id = cleanfild($data['id']);
-            echo $LandingWeb->deleteLandingWeb($landing_id);
-            break;
-
-        case 'updLW':
-            $landing_id = $data['id'];
-            $campo     =  $data['Campo'];
-            $valor     =  $data['Valor'];
-
-            echo $LandingWeb->updateCampoLandingWeb($landing_id,$campo,$valor);
-            break;
-       
-        // ----------------------
-        // wcombo_condicion
-        // ----------------------
-        // case 'insert_condicion':
-        //     $condicion_nombre = $data['nombre']);
-        //     echo $ControladorCombo->insertCondicion($condicion_nombre);
-        //     break;
-
-        // case 'get_condiciones':
-        //     echo $ControladorCombo->getAllCondiciones();
-        //     break;
-
-        // case 'delete_condicion':
-        //     $condicion_id = $data['id']);
-        //     echo $ControladorCombo->deleteCondicion($condicion_id);
-        //     break;
-
-        // ----------------------
-        // wcombo_operacion
-        // ----------------------
-        // case 'insert_operacion':
-        //     $condicion_id = $data['id']);
-        //     $condicion_nombre = $data['nombre']);
-        //     echo $ControladorCombo->insertOperacion($condicion_id, $condicion_nombre);
-        //     break;
-
-        // case 'get_operaciones':
-        //     echo $ControladorCombo->getAllOperaciones();
-        //     break;
-
-        // case 'delete_operacion':
-        //     $condicion_id = $data['id']);
-        //     echo $ControladorCombo->deleteOperacion($condicion_id);
-        //     break;
-
-        // ----------------------
-        // wcombo_tipobien
-        // ----------------------
-        // case 'insert_tipobien':
-        //     $tbien_nombre = $data['nombre']);
-        //     echo $ControladorCombo->insertTipoBien($tbien_nombre);
-        //     break;
-
-        // case 'get_tipobienes':
-        //     echo $ControladorCombo->getAllTipoBienes();
-        //     break;
-
-        // case 'delete_tipobien':
-        //     $tbien_id = $data['id']);
-        //     echo $ControladorCombo->deleteTipoBien($tbien_id);
-        //     break;
-
-
+     
         // ----------------------
         // Utilitarios
         // ----------------------
         case 'get_ubigeo':
             echo $ControladorUbigeo->get_ubigeo();
             break;
+
         // ----------------------
         // trabajadores
         // ----------------------
+
         case 'loggin':
             $usuario =  $data['user'];
             $clave =    $data['pass'];
@@ -567,48 +325,7 @@ if ($metodoPeticion === 'POST') {
                             Response::error('No se proporcionó un archivo PDF');
                         }
                         break;
-        // ----------------------
-        // Slider
-        // ----------------------
-
-        case 'get_slider':
-            $id = $data['id'];
-            echo $SliderController->getSlider($id);
-            break;
-
-        case 'listar_slider':
-            echo $SliderController->getSliders();
-            break;
-
-        case 'add_slider':
-            $url = $data['imagen'] ?? null;
-            // if ($url && $url['error'] === UPLOAD_ERR_OK) {
-            // } else {
-            //     $url = null;
-            // }
-            $nombre = $data['nombre'];
-            echo $SliderController->insertSlider($url, $nombre);
-            break;
-
-        case 'upd_slider':
-            $id = $data['id'];
-            $url = $data['imagen'];
-            $nombre = $data['nombre'];
-            $estado = $data['estado'];
-            echo $SliderController->updateSlider($id, $url, $nombre, $estado);
-            break;
-
-        case 'del_slider':
-            $id = $data['id'];
-            echo $SliderController->deleteSlider($id);
-            break;
-        
-        case 'upd_Estado':
-            $id =  $data['id'];
-            $estado =  $data['estado'];
-            echo $SliderController->updateEstado($id,$estado);
-            break;
-
+       
         // ----------------------
         // Noticias
         // ----------------------
@@ -693,43 +410,7 @@ if ($metodoPeticion === 'POST') {
             echo $NoticiasController->updateEstado($id, $estado);
             break;
 
-    // -------------------------------------------------------------------------------------
-// documentos
-        case 'list_documentos':
-            echo $DocumentosController->getDocumentos();
-            break;
-
-        case 'get_documento':
-            $id = $data['id'];
-            echo $DocumentosController->getDocumento($id);
-            break;
-
-        case 'add_documento':
-            $documento_nombre = $data['nombre'];
-            $documento_descripcion = $data['descripcion'];
-            $url_documento = $data['url'];
-            $id_cliente = $data['id_cliente'];
-            echo $DocumentosController->insertDocumento( $documento_nombre, $documento_descripcion, $url_documento, $id_cliente);
-            break;
-
-        case 'upd_documento':
-            $id_documento = $data['id'];
-            $documento_nombre = $data['nombre'];
-            $documento_descripcion = $data['descripcion'];
-            $url_documento = $data['url'];
-            $id_cliente = $data['id_cliente'];
-            echo $DocumentosController->updateDocumento($id_documento, $documento_nombre, $documento_descripcion, $url_documento, $id_cliente);
-            break;
-
-        case 'del_documento':
-            $id = $data['id'];
-            echo $DocumentosController->deleteDocumento($id);
-            break;
-
-        case 'get_documento_cliente':
-            $cliente_id = $data['cliente_id'];
-            echo $DocumentosController->getDocumentosPorCliente($cliente_id);
-            break;
+       
 
     // -------------------------------------------------------------------------------------
     // citas
@@ -835,73 +516,6 @@ if ($metodoPeticion === 'POST') {
             $cita_id = $data['cita_id'];
             $horario_id = $data['horario_id'];
             echo $CitasController->asignarHorarioCita($cita_id, $horario_id);
-            break;
-
-      
-
-    // -------------------------------------------------------------------------------------
-    // pagos
-    // -------------------------------------------------------------------------------------
-
-        case 'getPago':
-            $id = $data['id'];
-            echo $PagosController->getPago($id);
-            break;
-
-        case 'listar_pagos':
-            echo $PagosController->getPagos();
-            break;
-
-        case 'updatePago':
-            $pago_id = $data['id'];
-            $pago_tipo = $data['tipo'];
-            $pago_monto = $data['monto'];
-            $pago_comentario = $data['comentario'] ?? '';
-            $pago_url = $data['url'] ?? '';
-            $pago_citaid = $data['cita_id'];
-            echo $PagosController->updatePago(
-                $pago_id,
-                $pago_tipo,
-                $pago_monto,
-                $pago_comentario,
-                $pago_url,
-                $pago_citaid
-            );
-            break;
-
-        case 'add_pago':
-            $pago_tipo = $data['tipo'];
-            $pago_monto = $data['monto'];
-            $pago_comentario = $data['comentario'] ?? '';
-            $pago_url = $data['url'] ?? '';
-            $pago_citaid = $data['cita_id'];
-            echo $PagosController->insertPago(
-                $pago_tipo,
-                $pago_monto,
-                $pago_comentario,
-                $pago_url,
-                $pago_citaid
-            );
-            break;
-
-        case 'deletePago':
-            $pago_id = $data['id'];
-            echo $PagosController->deletePago($pago_id);
-            break;
-
-        case 'getPagosPorCita':
-            $cita_id = $data['cita_id'];
-            echo $PagosController->getPagosPorCita($cita_id);
-            break;
-
-        case 'getTotalPagosPorCita':
-            $cita_id = $data['cita_id'];
-            echo $PagosController->getTotalPagosPorCita($cita_id);
-            break;
-
-        case 'getPagosPorTipo':
-            $tipo = $data['tipo'];
-            echo $PagosController->getPagosPorTipo($tipo);
             break;
 
         default:
