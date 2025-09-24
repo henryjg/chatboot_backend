@@ -918,7 +918,7 @@ function cleanField($value) {
         return array_map('cleanField', $value);
     } else {
         $value = trim($value);
-        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
+        // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
         // Valida si es un número cuando corresponde
         if (is_numeric($value)) {
             return $value + 0; // Devuelve como int o float
