@@ -59,6 +59,8 @@ $NoticiasController     = new NoticiasController();
 $ServicioController     = new ServicioController();
 $CategoriasController   = new CategoriasController();
 $CitasController        = new CitasController();
+$PagosController        = new PagosController();
+// $ControladorGenerado    = new ContratoGeneradoController();
 
 // ----------------------
 // Procesamiento de la petición
@@ -516,6 +518,73 @@ if ($metodoPeticion === 'POST') {
             $cita_id = $data['cita_id'];
             $horario_id = $data['horario_id'];
             echo $CitasController->asignarHorarioCita($cita_id, $horario_id);
+            break;
+
+      
+
+    // -------------------------------------------------------------------------------------
+    // pagos
+    // -------------------------------------------------------------------------------------
+
+        case 'getPago':
+            $id = $data['id'];
+            echo $PagosController->getPago($id);
+            break;
+
+        case 'listar_pagos':
+            echo $PagosController->getPagos();
+            break;
+
+        case 'updatePago':
+            $pago_id = $data['id'];
+            $pago_tipo = $data['tipo'];
+            $pago_monto = $data['monto'];
+            $pago_comentario = $data['comentario'] ?? '';
+            $pago_url = $data['url'] ?? '';
+            $pago_citaid = $data['cita_id'];
+            echo $PagosController->updatePago(
+                $pago_id,
+                $pago_tipo,
+                $pago_monto,
+                $pago_comentario,
+                $pago_url,
+                $pago_citaid
+            );
+            break;
+
+        case 'add_pago':
+            $pago_tipo = $data['tipo'];
+            $pago_monto = $data['monto'];
+            $pago_comentario = $data['comentario'] ?? '';
+            $pago_url = $data['url'] ?? '';
+            $pago_citaid = $data['cita_id'];
+            echo $PagosController->insertPago(
+                $pago_tipo,
+                $pago_monto,
+                $pago_comentario,
+                $pago_url,
+                $pago_citaid
+            );
+            break;
+
+        case 'deletePago':
+            $pago_id = $data['id'];
+            echo $PagosController->deletePago($pago_id);
+            break;
+
+        case 'getPagosPorCita':
+            $cita_id = $data['cita_id'];
+            echo $PagosController->getPagosPorCita($cita_id);
+            break;
+
+        case 'getTotalPagosPorCita':
+            $cita_id = $data['cita_id'];
+            echo $PagosController->getTotalPagosPorCita($cita_id);
+            break;
+
+        case 'getPagosPorTipo':
+            $tipo = $data['tipo'];
+            echo $PagosController->getPagosPorTipo($tipo);
             break;
 
         default:
