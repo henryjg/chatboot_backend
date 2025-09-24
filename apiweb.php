@@ -66,6 +66,7 @@ $ServicioController     = new ServicioController();
 $CategoriasController   = new CategoriasController();
 $CitasController        = new CitasController();
 $PagosController        = new PagosController();
+$PreguntasController    = new PreguntasController();
 // $ControladorGenerado    = new ContratoGeneradoController();
 
 // ----------------------
@@ -902,6 +903,53 @@ if ($metodoPeticion === 'POST') {
         case 'getPagosPorTipo':
             $tipo = $data['tipo'];
             echo $PagosController->getPagosPorTipo($tipo);
+            break;
+
+    // -------------------------------------------------------------------------------------
+    // preguntas frecuentes
+    // -------------------------------------------------------------------------------------
+
+        case 'getPregunta':
+            $id = $data['id'];
+            echo $PreguntasController->getPregunta($id);
+            break;
+
+        case 'listar_preguntas':
+            echo $PreguntasController->getPreguntas();
+            break;
+
+        case 'add_pregunta':
+            $descripcion = $data['descripcion'];
+            $respuesta = $data['respuesta'];
+            $info_adicional = $data['info_adicional'] ?? '';
+            echo $PreguntasController->insertPregunta(
+                $descripcion,
+                $respuesta,
+                $info_adicional
+            );
+            break;
+
+        case 'updatePregunta':
+            $id = $data['id'];
+            $descripcion = $data['descripcion'];
+            $respuesta = $data['respuesta'];
+            $info_adicional = $data['info_adicional'] ?? '';
+            echo $PreguntasController->updatePregunta(
+                $id,
+                $descripcion,
+                $respuesta,
+                $info_adicional
+            );
+            break;
+
+        case 'deletePregunta':
+            $id = $data['id'];
+            echo $PreguntasController->deletePregunta($id);
+            break;
+
+        case 'buscarPreguntas':
+            $termino = $data['termino'];
+            echo $PreguntasController->buscarPreguntas($termino);
             break;
 
         default:
