@@ -11,14 +11,15 @@
         define("USER","root");
         define("PASS","");
         define("DB","hospitaldb"); 
-        
+        define("DB_PORT", 3306);
         
     } else {
         // CONFIGURACIÓN PARA HOSTINGER (PRODUCCIÓN)
-        define("SERVER","localhost");
-        define("USER","clinicadolor");
-        define("PASS","Camila30"); // Tu contraseña de la imagen
-        define("DB","bdclinica");
+        define("SERVER","n8_servidormysql");
+        define("USER","localhost");
+        define("PASS","bafbdf6fe9ae5facfc50"); // Tu contraseña de la imagen
+        define("DB","hospitaldb");
+        define("DB_PORT", 3306);
         
 
     } 
