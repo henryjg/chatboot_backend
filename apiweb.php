@@ -600,6 +600,7 @@ if ($metodoPeticion === 'POST') {
             echo $PreguntasController->getPreguntas();
             break;
 
+    // este es el endpoint
         case 'add_pregunta':
             $descripcion = $data['descripcion'];
             $respuesta = $data['respuesta'];
