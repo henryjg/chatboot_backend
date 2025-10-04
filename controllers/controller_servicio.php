@@ -181,7 +181,7 @@ class ServicioController {
 
  // ------------------------------------------------------
     // Función para almacenar imágenes y generar miniaturas
-    public function subirFoto($inmuebleId, $file) {
+	public function subirFoto($inmuebleId, $file) {
 		$uploadDir = 'uploads/fotos/';
 		$allowedTypes = ['jpg', 'jpeg', 'png', 'bmp'];
 		$fileName = basename($file['name']);

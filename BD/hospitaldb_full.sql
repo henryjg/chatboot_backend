@@ -43,23 +43,6 @@ CREATE TABLE `citas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 #
-# Structure for table "documentos"
-#
-
-DROP TABLE IF EXISTS `documentos`;
-CREATE TABLE `documentos` (
-  `id_documento` int(11) NOT NULL AUTO_INCREMENT,
-  `documento_nombre` varchar(255) DEFAULT NULL,
-  `documento_descripcion` varchar(255) DEFAULT NULL,
-  `documento_fecharegistro` datetime DEFAULT NULL,
-  `url_documento` varchar(255) DEFAULT NULL,
-  `id_cliente` int(11) NOT NULL,
-  PRIMARY KEY (`id_documento`),
-  KEY `fk_documentos_cliente` (`id_cliente`),
-  CONSTRAINT `fk_documentos_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`cliente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-#
 # Structure for table "empresa"
 #
 
@@ -141,43 +124,6 @@ CREATE TABLE `horadiacita` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 #
-# Structure for table "inscritos"
-#
-
-DROP TABLE IF EXISTS `inscritos`;
-CREATE TABLE `inscritos` (
-  `ins_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ins_dni` varchar(45) DEFAULT NULL,
-  `ins_nombre` varchar(45) DEFAULT NULL,
-  `ins_apellido` varchar(45) DEFAULT NULL,
-  `ins_celular` varchar(45) DEFAULT NULL,
-  `ins_email` varchar(45) DEFAULT NULL,
-  `ins_sexo` varchar(45) DEFAULT NULL,
-  `ins_fechanacimiento` varchar(45) DEFAULT NULL,
-  `ins_pais` varchar(45) DEFAULT NULL,
-  `ins_ciudad` varchar(45) DEFAULT NULL,
-  `ins_distancia` varchar(45) DEFAULT NULL,
-  `ins_categoria` varchar(45) DEFAULT NULL,
-  `ins_club` varchar(45) DEFAULT NULL,
-  `ins_talla` varchar(45) DEFAULT NULL,
-  `ins_contactoemergencia` varchar(45) DEFAULT NULL,
-  `ins_emergecia_nombre` varchar(45) DEFAULT NULL,
-  `ins_emergencia_apellido` varchar(45) DEFAULT NULL,
-  `ins_emergencia_celular` varchar(45) DEFAULT NULL,
-  `ins_esinfante` varchar(45) DEFAULT NULL,
-  `ins_apoderado_dni` varchar(45) DEFAULT NULL,
-  `ins_apoderado_nombre` varchar(45) DEFAULT NULL,
-  `ins_apoderado_apellido` varchar(145) DEFAULT NULL,
-  `ins_apoderado_celular` varchar(45) DEFAULT NULL,
-  `ins_fotodeportiva` varchar(245) DEFAULT NULL,
-  `ins_comprobante_foto` varchar(245) DEFAULT NULL,
-  `ins_comprobante_numop` varchar(45) DEFAULT NULL,
-  `ins_estado` varchar(45) DEFAULT NULL,
-  `ins_fecharegistro` datetime DEFAULT NULL,
-  PRIMARY KEY (`ins_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-#
 # Structure for table "mensajes"
 #
 
@@ -220,23 +166,6 @@ CREATE TABLE `noticias` (
   KEY `FK_noticias_foto_empresa` (`noticia_foto`),
   CONSTRAINT `FK_noticias_foto_empresa` FOREIGN KEY (`noticia_foto`) REFERENCES `foto_empresa` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-#
-# Structure for table "pago"
-#
-
-DROP TABLE IF EXISTS `pago`;
-CREATE TABLE `pago` (
-  `pago_id` int(11) NOT NULL AUTO_INCREMENT,
-  `pago_tipo` varchar(100) DEFAULT NULL,
-  `pago_monto` varchar(50) DEFAULT NULL,
-  `pago_comentario` varchar(255) DEFAULT NULL,
-  `pago_url` varchar(255) DEFAULT NULL,
-  `pago_citaId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`pago_id`),
-  KEY `pago_citaid` (`pago_citaId`),
-  CONSTRAINT `pago_citaid` FOREIGN KEY (`pago_citaId`) REFERENCES `citas` (`citas_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 #
 # Structure for table "preguntas_frecuentes"
@@ -287,19 +216,6 @@ CREATE TABLE `foto_servicio` (
   KEY `foto_servicio` (`foto_servicio`),
   CONSTRAINT `foto_servicio` FOREIGN KEY (`foto_servicio`) REFERENCES `servicio` (`servicio_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-#
-# Structure for table "slider"
-#
-
-DROP TABLE IF EXISTS `slider`;
-CREATE TABLE `slider` (
-  `slider_id` int(11) NOT NULL AUTO_INCREMENT,
-  `url_imagen` varchar(255) DEFAULT NULL,
-  `slider_nombre` varchar(255) DEFAULT NULL,
-  `slider_estado` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`slider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 #
 # Structure for table "trabajador"
