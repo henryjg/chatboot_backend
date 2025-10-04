@@ -5,7 +5,7 @@ class conexion{
 
     function connectDB()
     {
-        $this->conexion = mysqli_connect(SERVER, USER, PASS, DB);
+        $this->conexion = mysqli_connect(SERVER, USER, PASS, DB, DB_PORT);
         if ($this->conexion) {
             //OKey todo
         } else {
