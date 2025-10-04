@@ -25,12 +25,15 @@ class CitasController {
                     c.citas_consultorio as consultorio,
                     c.cita_preciogeneral as preciogeneral,
                     c.cita_preciofinal as preciofinal,
+                    c.cita_especialidad_id as especialidad_id,
+                    e.espe_nombre as especialidad_nombre,
                     h.hora_fechainicio as hora_inicio,
                     h.hora_fechafin as hora_fin,
                     h.hora_id as horario_id
                 FROM citas c
                 LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
                 LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
                 WHERE c.citas_id = '$id'";
         $result = $conexion->ejecutarConsulta($query);
 
@@ -89,12 +92,15 @@ class CitasController {
                    c.citas_consultorio as consultorio,
                    c.cita_preciogeneral as preciogeneral,
                    c.cita_preciofinal as preciofinal,
+                   c.cita_especialidad_id as especialidad_id,
+                   e.espe_nombre as especialidad_nombre,
                    h.hora_fechainicio as hora_inicio,
                    h.hora_fechafin as hora_fin,
                    h.hora_id as horario_id
                 FROM citas c
                 LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
                 LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
                 ORDER BY c.citas_fecha DESC, h.hora_fechainicio ASC, c.citas_id ASC";
         $result = $conexion->ejecutarConsulta($query);
 
@@ -122,7 +128,8 @@ class CitasController {
         $citas_consultorio,
         $cita_preciogeneral,
         $cita_preciofinal,
-        $horario_id
+        $horario_id,
+        $especialidad_id
     ) {
         $conexion = new Conexion();
 
@@ -142,19 +149,30 @@ class CitasController {
             return;
         }
         
-        // Verificar si el horario ya está ocupado para esa fecha (excluyendo la cita actual)
+        // Verificar si la especialidad existe
+        $queryEspecialidad = "SELECT COUNT(*) as total FROM especialidad WHERE espe_id = $especialidad_id";
+        $resultEspecialidad = $conexion->ejecutarConsulta($queryEspecialidad);
+        $especialidadExiste = $resultEspecialidad->fetch_assoc()['total'] > 0;
+        
+        if (!$especialidadExiste) {
+            response::error('La especialidad seleccionada no existe');
+            return;
+        }
+        
+        // NUEVA LÓGICA: Verificar si el horario ya está ocupado para esa fecha Y especialidad (excluyendo la cita actual)
         $queryOcupado = "SELECT COUNT(*) as total 
                         FROM horadiacita hdc
                         INNER JOIN citas c ON hdc.hdc_citaId = c.citas_id
                         WHERE hdc.hdc_horarioId = $horario_id 
                         AND c.citas_fecha = '$citas_fecha' 
+                        AND c.cita_especialidad_id = $especialidad_id
                         AND c.citas_estado != 'cancelada'
                         AND c.citas_id != $citas_id";
         $resultOcupado = $conexion->ejecutarConsulta($queryOcupado);
         $horarioOcupado = $resultOcupado->fetch_assoc()['total'] > 0;
         
         if ($horarioOcupado) {
-            response::error('El horario seleccionado ya está ocupado para esta fecha. Por favor, elija otro horario.');
+            response::error('El horario seleccionado ya está ocupado para esta especialidad en esta fecha. Por favor, elija otro horario.');
             return;
         }
 
@@ -170,7 +188,8 @@ class CitasController {
                     citas_estado = '$citas_estado',
                     citas_consultorio = '$citas_consultorio',
                     cita_preciogeneral = '$cita_preciogeneral',
-                    cita_preciofinal = '$cita_preciofinal'
+                    cita_preciofinal = '$cita_preciofinal',
+                    cita_especialidad_id = '$especialidad_id'
                 WHERE citas_id = $citas_id";
 
         $result = $conexion->save($query);
@@ -212,13 +231,20 @@ class CitasController {
         $citas_consultorio,
         $cita_preciogeneral,
         $cita_preciofinal,
-        $horario_id
+        $horario_id,
+        $especialidad_id
     ) {
         $conexion = new Conexion();
         
         // Validar que se proporcione un horario (OBLIGATORIO)
         if ($horario_id === null || $horario_id === '' || $horario_id === 0) {
             response::error('Debe seleccionar un horario para la cita. El horario es obligatorio.');
+            return;
+        }
+        
+        // Validar que se proporcione una especialidad (OBLIGATORIO)
+        if ($especialidad_id === null || $especialidad_id === '' || $especialidad_id === 0) {
+            response::error('Debe seleccionar una especialidad para la cita. La especialidad es obligatoria.');
             return;
         }
         
@@ -238,12 +264,30 @@ class CitasController {
             return;
         }
         
-        // Verificar si el horario ya está ocupado para esa fecha
+        // Verificar si la especialidad existe
+        $queryEspecialidad = "SELECT COUNT(*) as total FROM especialidad WHERE espe_id = $especialidad_id";
+        $resultEspecialidad = $conexion->ejecutarConsulta($queryEspecialidad);
+        
+        if (!$resultEspecialidad) {
+            response::error('Error al validar la especialidad');
+            return;
+        }
+        
+        $especialidadExiste = $resultEspecialidad->fetch_assoc()['total'] > 0;
+        
+        if (!$especialidadExiste) {
+            response::error('La especialidad seleccionada no existe');
+            return;
+        }
+        
+        // NUEVA LÓGICA: Verificar si el horario ya está ocupado para esa fecha Y especialidad
+        // Ahora dos especialidades diferentes PUEDEN usar el mismo horario en la misma fecha
         $queryOcupado = "SELECT COUNT(*) as total 
                         FROM horadiacita hdc
                         INNER JOIN citas c ON hdc.hdc_citaId = c.citas_id
                         WHERE hdc.hdc_horarioId = $horario_id 
                         AND c.citas_fecha = '$citas_fecha' 
+                        AND c.cita_especialidad_id = $especialidad_id
                         AND c.citas_estado != 'cancelada'";
         $resultOcupado = $conexion->ejecutarConsulta($queryOcupado);
         
@@ -255,7 +299,7 @@ class CitasController {
         $horarioOcupado = $resultOcupado->fetch_assoc()['total'] > 0;
         
         if ($horarioOcupado) {
-            response::error('El horario seleccionado ya está ocupado para esta fecha. Por favor, elija otro horario.');
+            response::error('El horario seleccionado ya está ocupado para esta especialidad en esta fecha. Por favor, elija otro horario.');
             return;
         }
         
@@ -271,7 +315,8 @@ class CitasController {
                     citas_estado,
                     citas_consultorio,
                     cita_preciogeneral,
-                    cita_preciofinal
+                    cita_preciofinal,
+                    cita_especialidad_id
                   ) VALUES (
                     '$citas_fecha', 
                     '$citas_dni', 
@@ -283,7 +328,8 @@ class CitasController {
                     'pendiente',
                     '$citas_consultorio',
                     '$cita_preciogeneral',
-                    '$cita_preciofinal'
+                    '$cita_preciofinal',
+                    '$especialidad_id'
                   )";
         $result = $conexion->insertar($query);
 
@@ -355,11 +401,15 @@ class CitasController {
                    c.citas_consultorio as consultorio,
                    c.cita_preciogeneral as preciogeneral,
                    c.cita_preciofinal as preciofinal,
+                   c.cita_especialidad_id as especialidad_id,
+                   e.espe_nombre as especialidad_nombre,
                    h.hora_fechainicio as hora_inicio,
-                   h.hora_fechafin as hora_fin
+                   h.hora_fechafin as hora_fin,
+                   h.hora_id as horario_id
                 FROM citas c
                 LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
                 LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
                 WHERE c.citas_fecha = '$fecha'
                 ORDER BY h.hora_fechainicio ASC";
         $result = $conexion->ejecutarConsulta($query);
@@ -375,7 +425,7 @@ class CitasController {
         }
     }
 
-    public function getHorariosDisponibles($fecha) {
+    public function getHorariosDisponibles($fecha, $especialidad_id = null) {
         $conexion = new Conexion();
         
         // Obtener todos los horarios disponibles
@@ -392,11 +442,17 @@ class CitasController {
             return;
         }
 
-        // Obtener horarios ya ocupados para esa fecha
+        // Obtener horarios ya ocupados para esa fecha y especialidad específica
         $queryOcupados = "SELECT hdc.hdc_horarioId 
                          FROM horadiacita hdc
                          INNER JOIN citas c ON hdc.hdc_citaId = c.citas_id
                          WHERE c.citas_fecha = '$fecha' AND c.citas_estado != 'cancelada'";
+        
+        // Si se especifica una especialidad, solo considerar ocupados los horarios de esa especialidad
+        if ($especialidad_id !== null) {
+            $queryOcupados .= " AND c.cita_especialidad_id = '$especialidad_id'";
+        }
+        
         $resultOcupados = $conexion->ejecutarConsulta($queryOcupados);
 
         $horariosOcupados = array();
@@ -422,6 +478,165 @@ class CitasController {
         }
 
         response::success($horariosDisponibles, 'Horarios obtenidos correctamente');
+    }
+
+    // Obtener citas por especialidad
+    public function getCitasPorEspecialidad($especialidad_id) {
+        $conexion = new Conexion();
+        $query = "SELECT 
+                   c.citas_id as id,
+                   c.citas_fecha as fecha,
+                   c.citas_dni as dni,
+                   c.citas_nombre as nombre,
+                   c.cita_celular as celular,
+                   c.citas_procedencia as procedencia,
+                   c.citas_descripcion as descripcion,
+                   c.citas_precio as precio,
+                   c.citas_estado as estado,
+                   c.citas_consultorio as consultorio,
+                   c.cita_preciogeneral as preciogeneral,
+                   c.cita_preciofinal as preciofinal,
+                   c.cita_especialidad_id as especialidad_id,
+                   e.espe_nombre as especialidad_nombre,
+                   h.hora_fechainicio as hora_inicio,
+                   h.hora_fechafin as hora_fin,
+                   h.hora_id as horario_id
+                FROM citas c
+                LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
+                LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
+                WHERE c.cita_especialidad_id = '$especialidad_id'
+                ORDER BY c.citas_fecha DESC, h.hora_fechainicio ASC";
+        $result = $conexion->ejecutarConsulta($query);
+
+        if ($result && $result->num_rows > 0) {
+            $citas = array();
+            while ($cita = $result->fetch_assoc()) {
+                $citas[] = $cita;
+            }
+            response::success($citas, 'Citas de la especialidad obtenidas correctamente');
+        } else {
+            response::success(array(), 'No hay citas para esta especialidad');
+        }
+    }
+
+    // Obtener citas por fecha y especialidad
+    public function getCitasPorFechaYEspecialidad($fecha, $especialidad_id) {
+        $conexion = new Conexion();
+        $query = "SELECT 
+                   c.citas_id as id,
+                   c.citas_fecha as fecha,
+                   c.citas_dni as dni,
+                   c.citas_nombre as nombre,
+                   c.cita_celular as celular,
+                   c.citas_procedencia as procedencia,
+                   c.citas_descripcion as descripcion,
+                   c.citas_precio as precio,
+                   c.citas_estado as estado,
+                   c.citas_consultorio as consultorio,
+                   c.cita_preciogeneral as preciogeneral,
+                   c.cita_preciofinal as preciofinal,
+                   c.cita_especialidad_id as especialidad_id,
+                   e.espe_nombre as especialidad_nombre,
+                   h.hora_fechainicio as hora_inicio,
+                   h.hora_fechafin as hora_fin,
+                   h.hora_id as horario_id
+                FROM citas c
+                LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
+                LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+                LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
+                WHERE c.citas_fecha = '$fecha' AND c.cita_especialidad_id = '$especialidad_id'
+                ORDER BY h.hora_fechainicio ASC";
+        $result = $conexion->ejecutarConsulta($query);
+
+        if ($result && $result->num_rows > 0) {
+            $citas = array();
+            while ($cita = $result->fetch_assoc()) {
+                $citas[] = $cita;
+            }
+            response::success($citas, 'Citas del día y especialidad obtenidas correctamente');
+        } else {
+            response::success(array(), 'No hay citas para esta fecha y especialidad');
+        }
+    }
+
+    // Obtener horarios disponibles con detalles de ocupación por especialidad
+    public function getHorariosPorEspecialidadYFecha($fecha, $especialidad_id = null) {
+        $conexion = new Conexion();
+        
+        // Obtener todos los horarios disponibles
+        $queryHorarios = "SELECT 
+                            hora_id as id,
+                            hora_fechainicio as hora_inicio,
+                            hora_fechafin as hora_fin
+                        FROM horarios 
+                        ORDER BY hora_fechainicio ASC";
+        $resultHorarios = $conexion->ejecutarConsulta($queryHorarios);
+
+        if (!$resultHorarios || $resultHorarios->num_rows == 0) {
+            response::error('No se encontraron horarios configurados');
+            return;
+        }
+
+        // Obtener información detallada de ocupación por horario
+        // Si se especifica una especialidad, solo mostrar ocupaciones de esa especialidad
+        $queryOcupacion = "SELECT 
+                            hdc.hdc_horarioId,
+                            c.cita_especialidad_id,
+                            e.espe_nombre as especialidad_nombre,
+                            c.citas_nombre as paciente_nombre,
+                            c.citas_estado
+                         FROM horadiacita hdc
+                         INNER JOIN citas c ON hdc.hdc_citaId = c.citas_id
+                         LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
+                         WHERE c.citas_fecha = '$fecha' AND c.citas_estado != 'cancelada'";
+        
+        // FILTRAR POR ESPECIALIDAD: Solo mostrar ocupaciones de la especialidad solicitada
+        if ($especialidad_id !== null) {
+            $queryOcupacion .= " AND c.cita_especialidad_id = '$especialidad_id'";
+        }
+        
+        $resultOcupacion = $conexion->ejecutarConsulta($queryOcupacion);
+
+        // Organizar ocupación por horario
+        $ocupacionPorHorario = array();
+        if ($resultOcupacion && $resultOcupacion->num_rows > 0) {
+            while ($ocupacion = $resultOcupacion->fetch_assoc()) {
+                $horarioId = $ocupacion['hdc_horarioId'];
+                if (!isset($ocupacionPorHorario[$horarioId])) {
+                    $ocupacionPorHorario[$horarioId] = array();
+                }
+                $ocupacionPorHorario[$horarioId][] = array(
+                    'especialidad_id' => $ocupacion['cita_especialidad_id'],
+                    'especialidad_nombre' => $ocupacion['especialidad_nombre'],
+                    'paciente_nombre' => $ocupacion['paciente_nombre'],
+                    'estado' => $ocupacion['citas_estado']
+                );
+            }
+        }
+
+        // Procesar horarios con información detallada
+        $horariosDetallados = array();
+        while ($horario = $resultHorarios->fetch_assoc()) {
+            $horarioId = $horario['id'];
+            $ocupaciones = isset($ocupacionPorHorario[$horarioId]) ? $ocupacionPorHorario[$horarioId] : array();
+            
+            // La disponibilidad se basa en si hay ocupaciones en el array filtrado
+            // Si $especialidad_id está definido, $ocupaciones solo contiene ocupaciones de esa especialidad
+            // Si $especialidad_id es null, $ocupaciones contiene todas las ocupaciones
+            $disponibleParaEspecialidad = empty($ocupaciones);
+
+            $horariosDetallados[] = array(
+                'id' => $horarioId,
+                'hora_inicio' => $horario['hora_inicio'],
+                'hora_fin' => $horario['hora_fin'],
+                'disponible' => $disponibleParaEspecialidad,
+                'ocupaciones' => $ocupaciones,
+                'total_ocupaciones' => count($ocupaciones)
+            );
+        }
+
+        response::success($horariosDetallados, 'Horarios con detalles de ocupación obtenidos correctamente');
     }
 
     // Asignar horario a una cita

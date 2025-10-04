@@ -60,6 +60,8 @@ $ServicioController     = new ServicioController();
 $CategoriasController   = new CategoriasController();
 $CitasController        = new CitasController();
 $PreguntasController    = new PreguntasController();
+$EspecialidadController = new EspecialidadController();
+$PagosController        = new PagosController();
 // $ControladorGenerado    = new ContratoGeneradoController();
 
 // ----------------------
@@ -446,6 +448,7 @@ if ($metodoPeticion === 'POST') {
             $cita_preciogeneral = $data['preciogeneral'] ?? 0;
             $cita_preciofinal = $data['preciofinal'] ?? 0;
             $horario_id = $data['horario_id'] ?? null;
+            $especialidad_id = $data['especialidad_id'] ?? null;
             
             echo $CitasController->updateCita(
                 $citas_id,
@@ -460,7 +463,8 @@ if ($metodoPeticion === 'POST') {
                 $citas_consultorio,
                 $cita_preciogeneral,
                 $cita_preciofinal,
-                $horario_id
+                $horario_id,
+                $especialidad_id
             );
             break;
 
@@ -476,6 +480,7 @@ if ($metodoPeticion === 'POST') {
             $cita_preciogeneral = $data['preciogeneral'] ?? 0;
             $cita_preciofinal = $data['preciofinal'] ?? 0;
             $horario_id = $data['horario_id'];
+            $especialidad_id = $data['especialidad_id'];
             
             echo $CitasController->insertCita(
                 $citas_fecha,
@@ -488,7 +493,8 @@ if ($metodoPeticion === 'POST') {
                 $citas_consultorio,
                 $cita_preciogeneral,
                 $cita_preciofinal,
-                $horario_id
+                $horario_id,
+                $especialidad_id
             );
             break;
 
@@ -506,7 +512,8 @@ if ($metodoPeticion === 'POST') {
         // Endpoints específicos para el chatbot y disponibilidad de horarios
         case 'getHorariosDisponibles':
             $fecha = $data['fecha'];
-            echo $CitasController->getHorariosDisponibles($fecha);
+            $especialidad_id = $data['especialidad_id'] ?? null;
+            echo $CitasController->getHorariosDisponibles($fecha, $especialidad_id);
             break;
 
         case 'getCitasPorFecha':
@@ -520,7 +527,22 @@ if ($metodoPeticion === 'POST') {
             echo $CitasController->asignarHorarioCita($cita_id, $horario_id);
             break;
 
-      
+        case 'getCitasPorEspecialidad':
+            $especialidad_id = $data['id'];
+            echo $CitasController->getCitasPorEspecialidad($especialidad_id);
+            break;
+
+        case 'getCitasPorFechaYEspecialidad':
+            $fecha = $data['fecha'];
+            $especialidad_id = $data['id'];
+            echo $CitasController->getCitasPorFechaYEspecialidad($fecha, $especialidad_id);
+            break;
+
+        case 'getHorariosPorEspecialidadYFecha':
+            $fecha = $data['fecha'];
+            $especialidad_id = $data['id'] ?? null;
+            echo $CitasController->getHorariosPorEspecialidadYFecha($fecha, $especialidad_id);
+            break;
 
     // -------------------------------------------------------------------------------------
     // pagos
@@ -633,6 +655,53 @@ if ($metodoPeticion === 'POST') {
         case 'buscarPreguntas':
             $termino = $data['termino'];
             echo $PreguntasController->buscarPreguntas($termino);
+            break;
+
+    // -------------------------------------------------------------------------------------
+    // especialidades
+    // -------------------------------------------------------------------------------------
+
+        case 'getEspecialidad':
+            $id = $data['id'];
+            echo $EspecialidadController->getEspecialidad($id);
+            break;
+
+        case 'listar_especialidades':
+            echo $EspecialidadController->getEspecialidades();
+            break;
+
+        case 'add_especialidad':
+            $nombre = $data['nombre'];
+            $descripcion = $data['descripcion'] ?? '';
+            $url = $data['url'] ?? '';
+            echo $EspecialidadController->insertEspecialidad(
+                $nombre,
+                $descripcion,
+                $url
+            );
+            break;
+
+        case 'updateEspecialidad':
+            $id = $data['id'];
+            $nombre = $data['nombre'];
+            $descripcion = $data['descripcion'] ?? '';
+            $url = $data['url'] ?? '';
+            echo $EspecialidadController->updateEspecialidad(
+                $id,
+                $nombre,
+                $descripcion,
+                $url
+            );
+            break;
+
+        case 'deleteEspecialidad':
+            $id = $data['id'];
+            echo $EspecialidadController->deleteEspecialidad($id);
+            break;
+
+        case 'buscarEspecialidades':
+            $termino = $data['termino'];
+            echo $EspecialidadController->buscarEspecialidades($termino);
             break;
 
         default:
