@@ -16,7 +16,9 @@ class PreguntasController {
                     pf_if as id,
                     pf_descripcion as descripcion,
                     pf_respuesta as respuesta,
-                    pf_infoAdicional as info_adicional
+                    pf_infoAdicional as info_adicional,
+                    pf_video_url as video_url,
+                    pf_imagen_url as imagen_url
                 FROM preguntas_frecuentes 
                 WHERE pf_if = '$id'";
         $result = $conexion->ejecutarConsulta($query);
@@ -35,7 +37,9 @@ class PreguntasController {
                    pf_if as id,
                    pf_descripcion as descripcion,
                    pf_respuesta as respuesta,
-                   pf_infoAdicional as info_adicional
+                   pf_infoAdicional as info_adicional,
+                   pf_video_url as video_url,
+                   pf_imagen_url as imagen_url
                 FROM preguntas_frecuentes 
                 ORDER BY pf_if ASC";
         $result = $conexion->ejecutarConsulta($query);
@@ -54,7 +58,9 @@ class PreguntasController {
     public function insertPregunta(
         $pf_descripcion,
         $pf_respuesta,
-        $pf_infoAdicional
+        $pf_infoAdicional,
+        $pf_video_url,
+        $pf_imagen_url
     ) {
         $conexion = new Conexion();
         
@@ -68,11 +74,15 @@ class PreguntasController {
         $query = "INSERT INTO preguntas_frecuentes (
                     pf_descripcion, 
                     pf_respuesta,
-                    pf_infoAdicional
+                    pf_infoAdicional,
+                    pf_video_url,
+                    pf_imagen_url
                   ) VALUES (
                     '$pf_descripcion', 
                     '$pf_respuesta',
-                    '$pf_infoAdicional'
+                    '$pf_infoAdicional',
+                    '$pf_video_url',
+                    '$pf_imagen_url'
                   )";
         $result = $conexion->insertar($query);
 
@@ -87,7 +97,9 @@ class PreguntasController {
         $pf_id,
         $pf_descripcion,
         $pf_respuesta,
-        $pf_infoAdicional
+        $pf_infoAdicional,
+        $pf_video_url,
+        $pf_imagen_url
     ) {
         $conexion = new Conexion();
 
@@ -102,6 +114,8 @@ class PreguntasController {
                     pf_descripcion = '$pf_descripcion',
                     pf_respuesta = '$pf_respuesta',
                     pf_infoAdicional = '$pf_infoAdicional'
+                    pf_video_url = '$pf_video_url',
+                    pf_imagen_url = '$pf_imagen_url'
                 WHERE pf_if = $pf_id";
 
         $result = $conexion->save($query);
@@ -144,7 +158,7 @@ class PreguntasController {
                    pf_if as id,
                    pf_descripcion as descripcion,
                    pf_respuesta as respuesta,
-                   pf_infoAdicional as info_adicional
+                   pf_infoAdicional as info_adicional,
                 FROM preguntas_frecuentes 
                 WHERE pf_descripcion LIKE '%$termino%' 
                    OR pf_respuesta LIKE '%$termino%'

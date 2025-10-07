@@ -627,10 +627,14 @@ if ($metodoPeticion === 'POST') {
             $descripcion = $data['descripcion'];
             $respuesta = $data['respuesta'];
             $info_adicional = $data['info_adicional'] ?? '';
+            $pf_video_url = $data['video_url'] ?? '';
+            $pf_imagen_url = $data['imagen_url'] ?? '';
             echo $PreguntasController->insertPregunta(
                 $descripcion,
                 $respuesta,
-                $info_adicional
+                $info_adicional,
+                $pf_video_url,
+                $pf_imagen_url
             );
             break;
 
@@ -639,11 +643,15 @@ if ($metodoPeticion === 'POST') {
             $descripcion = $data['descripcion'];
             $respuesta = $data['respuesta'];
             $info_adicional = $data['info_adicional'] ?? '';
+            $pf_video_url = $data['video_url'] ?? '';
+            $pf_imagen_url = $data['imagen_url'] ?? '';
             echo $PreguntasController->updatePregunta(
                 $id,
                 $descripcion,
                 $respuesta,
-                $info_adicional
+                $info_adicional,
+                $pf_video_url,
+                $pf_imagen_url
             );
             break;
 
