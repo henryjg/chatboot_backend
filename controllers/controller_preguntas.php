@@ -113,7 +113,7 @@ class PreguntasController {
         $query = "UPDATE preguntas_frecuentes SET 
                     pf_descripcion = '$pf_descripcion',
                     pf_respuesta = '$pf_respuesta',
-                    pf_infoAdicional = '$pf_infoAdicional'
+                    pf_infoAdicional = '$pf_infoAdicional',
                     pf_video_url = '$pf_video_url',
                     pf_imagen_url = '$pf_imagen_url'
                 WHERE pf_if = $pf_id";
