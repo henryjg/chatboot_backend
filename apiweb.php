@@ -25,6 +25,10 @@ $tipoContenidoPeticion = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYP
 
 // ----------------------
 
+// Inicializar variables
+$data = array();
+$peticion = null;
+
 if ($tipoContenidoPeticion === "application/json") {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
@@ -42,8 +46,33 @@ if ($tipoContenidoPeticion === "application/json") {
     $peticion = $data['op'] ?? null;
 
 } else {
-    // Tipo de contenido desconocido
-    Response::error('Tipo de contenido desconocido: ' . $tipoContenidoPeticion);
+    // Intentar leer desde POST o GET como fallback
+    if (!empty($_POST)) {
+        foreach ($_POST as $key => $value) {
+            $data[$key] = cleanField($value);
+        }
+        $peticion = $data['op'] ?? null;
+    } else if (!empty($_GET)) {
+        foreach ($_GET as $key => $value) {
+            $data[$key] = cleanField($value);
+        }
+        $peticion = $data['op'] ?? null;
+    } else {
+        // Intentar leer como JSON sin Content-Type
+        $jsonData = file_get_contents('php://input');
+        if ($jsonData) {
+            $decoded = json_decode($jsonData, true);
+            if ($decoded !== null) {
+                $data = $decoded;
+                $peticion = $data['op'] ?? null;
+            }
+        }
+    }
+    
+    // Si aún no tenemos petición, mostrar error
+    if ($peticion === null) {
+        Response::error('Tipo de contenido desconocido o falta parámetro "op": ' . $tipoContenidoPeticion);
+    }
 }
 
 // ----------------------

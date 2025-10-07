@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - Clínica del Dolor Piura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .header .endpoint {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #495057;
+            word-break: break-all;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .test-button:active {
+            transform: translateY(0);
+        }
+        .response-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .success {
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            border-left: 4px solid #dc3545;
+        }
+        .loading {
+            border-left: 4px solid #ffc107;
+        }
+        .label {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Test API - Clínica del Dolor Piura</h1>
+            <p class="endpoint">https://apichatbot.clinicadeldolorpiura.com/apiweb.php</p>
+        </div>
+
+        <div class="grid">
+            <!-- Test 1: Get Empresa -->
+            <div class="card">
+                <h2>📋 Test 1: Obtener Empresa</h2>
+                <p>Endpoint: <code>get_Empresa</code></p>
+                <button class="test-button" onclick="testGetEmpresa()">▶ Ejecutar Test</button>
+                <div id="response-empresa" class="response-box" style="display:none;"></div>
+            </div>
+
+            <!-- Test 2: Get Categorías -->
+            <div class="card">
+                <h2>📂 Test 2: Obtener Categorías</h2>
+                <p>Endpoint: <code>getCategorias</code></p>
+                <button class="test-button" onclick="testGetCategorias()">▶ Ejecutar Test</button>
+                <div id="response-categorias" class="response-box" style="display:none;"></div>
+            </div>
+
+            <!-- Test 3: Get Servicios -->
+            <div class="card">
+                <h2>🏥 Test 3: Obtener Servicios</h2>
+                <p>Endpoint: <code>getServicios</code></p>
+                <button class="test-button" onclick="testGetServicios()">▶ Ejecutar Test</button>
+                <div id="response-servicios" class="response-box" style="display:none;"></div>
+            </div>
+
+            <!-- Test 4: Get Especialidades -->
+            <div class="card">
+                <h2>⚕️ Test 4: Obtener Especialidades</h2>
+                <p>Endpoint: <code>listar_especialidades</code></p>
+                <button class="test-button" onclick="testGetEspecialidades()">▶ Ejecutar Test</button>
+                <div id="response-especialidades" class="response-box" style="display:none;"></div>
+            </div>
+
+            <!-- Test 5: Get Preguntas Frecuentes -->
+            <div class="card">
+                <h2>❓ Test 5: Preguntas Frecuentes</h2>
+                <p>Endpoint: <code>listar_preguntas</code></p>
+                <button class="test-button" onclick="testGetPreguntas()">▶ Ejecutar Test</button>
+                <div id="response-preguntas" class="response-box" style="display:none;"></div>
+            </div>
+
+            <!-- Test 6: Get Noticias -->
+            <div class="card">
+                <h2>📰 Test 6: Obtener Noticias</h2>
+                <p>Endpoint: <code>listar_noticias</code></p>
+                <button class="test-button" onclick="testGetNoticias()">▶ Ejecutar Test</button>
+                <div id="response-noticias" class="response-box" style="display:none;"></div>
+            </div>
+
+            <!-- Test Personalizado -->
+            <div class="card" style="grid-column: 1 / -1;">
+                <h2>🔧 Test Personalizado</h2>
+                <label class="label">Operación (op):</label>
+                <input type="text" id="custom-op" placeholder="Ej: get_Empresa">
+                
+                <label class="label">Datos JSON (opcional):</label>
+                <textarea id="custom-data" placeholder='{"id": 1}'></textarea>
+                
+                <button class="test-button" onclick="testCustom()">▶ Ejecutar Test Personalizado</button>
+                <div id="response-custom" class="response-box" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://apichatbot.clinicadeldolorpiura.com/apiweb.php';
+
+        async function makeRequest(operation, additionalData = {}) {
+            const data = {
+                op: operation,
+                ...additionalData
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const text = await response.text();
+                
+                // Intentar parsear como JSON
+                try {
+                    return {
+                        success: true,
+                        data: JSON.parse(text),
+                        raw: text,
+                        status: response.status
+                    };
+                } catch (e) {
+                    // Si no es JSON válido, devolver texto raw
+                    return {
+                        success: false,
+                        data: null,
+                        raw: text,
+                        status: response.status,
+                        error: 'Respuesta no es JSON válido'
+                    };
+                }
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message,
+                    status: 0
+                };
+            }
+        }
+
+        function displayResponse(elementId, result) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            
+            if (result.success && result.data) {
+                element.className = 'response-box success';
+                element.textContent = JSON.stringify(result.data, null, 2);
+            } else {
+                element.className = 'response-box error';
+                element.textContent = result.raw || result.error || 'Error desconocido';
+            }
+        }
+
+        async function testGetEmpresa() {
+            const result = await makeRequest('get_Empresa');
+            displayResponse('response-empresa', result);
+        }
+
+        async function testGetCategorias() {
+            const result = await makeRequest('getCategorias');
+            displayResponse('response-categorias', result);
+        }
+
+        async function testGetServicios() {
+            const result = await makeRequest('getServicios');
+            displayResponse('response-servicios', result);
+        }
+
+        async function testGetEspecialidades() {
+            const result = await makeRequest('listar_especialidades');
+            displayResponse('response-especialidades', result);
+        }
+
+        async function testGetPreguntas() {
+            const result = await makeRequest('listar_preguntas');
+            displayResponse('response-preguntas', result);
+        }
+
+        async function testGetNoticias() {
+            const result = await makeRequest('listar_noticias');
+            displayResponse('response-noticias', result);
+        }
+
+        async function testCustom() {
+            const op = document.getElementById('custom-op').value;
+            const dataText = document.getElementById('custom-data').value;
+            
+            if (!op) {
+                alert('Por favor ingresa una operación');
+                return;
+            }
+
+            let additionalData = {};
+            if (dataText.trim()) {
+                try {
+                    additionalData = JSON.parse(dataText);
+                } catch (e) {
+                    alert('JSON inválido en datos adicionales');
+                    return;
+                }
+            }
+
+            const result = await makeRequest(op, additionalData);
+            displayResponse('response-custom', result);
+        }
+    </script>
+</body>
+</html>
