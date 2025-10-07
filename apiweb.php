@@ -67,7 +67,7 @@ $PagosController        = new PagosController();
 // ----------------------
 // Procesamiento de la petición
 // ----------------------
-if ($metodoPeticion === 'POST' || $metodoPeticion === 'GET') {
+if ($metodoPeticion === 'POST' ) {
     switch ($peticion) {
 
       
