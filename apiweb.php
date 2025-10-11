@@ -463,6 +463,13 @@ if ($metodoPeticion === 'POST' ) {
             echo $CitasController->getCitas();
             break;
 
+        case 'getCitas_Filtro':
+            $dia = $data['dia'] ?? null;
+            $mes = $data['mes'] ?? null;
+            $anio = $data['anio'] ?? null;
+            echo $CitasController->getCitas_Filtro($dia, $mes, $anio);
+            break;
+
         case 'updateCita':
             $citas_id = $data['id'];
             $citas_fecha = $data['fecha'];

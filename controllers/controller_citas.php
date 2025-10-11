@@ -115,6 +115,55 @@ class CitasController {
         }
     }
 
+    public function getCitas_Filtro($dia = null, $mes = null, $anio = null) {
+    $conexion = new Conexion();
+    $filtros = array();
+    if ($dia !== null) {
+        $filtros[] = "DAY(c.citas_fecha) = '$dia'";
+    }
+    if ($mes !== null) {
+        $filtros[] = "MONTH(c.citas_fecha) = '$mes'";
+    }
+    if ($anio !== null) {
+        $filtros[] = "YEAR(c.citas_fecha) = '$anio'";
+    }
+    $where = count($filtros) > 0 ? ('WHERE ' . implode(' AND ', $filtros)) : '';
+    $query = "SELECT 
+               c.citas_id as id,
+               c.citas_fecha as fecha,
+               c.citas_dni as dni,
+               c.citas_nombre as nombre,
+               c.cita_celular as celular,
+               c.citas_procedencia as procedencia,
+               c.citas_descripcion as descripcion,
+               c.citas_precio as precio,
+               c.citas_estado as estado,
+               c.citas_consultorio as consultorio,
+               c.cita_preciogeneral as preciogeneral,
+               c.cita_preciofinal as preciofinal,
+               c.cita_especialidad_id as especialidad_id,
+               e.espe_nombre as especialidad_nombre,
+               h.hora_fechainicio as hora_inicio,
+               h.hora_fechafin as hora_fin,
+               h.hora_id as horario_id
+            FROM citas c
+            LEFT JOIN horadiacita hdc ON c.citas_id = hdc.hdc_citaId
+            LEFT JOIN horarios h ON hdc.hdc_horarioId = h.hora_id
+            LEFT JOIN especialidad e ON c.cita_especialidad_id = e.espe_id
+            $where
+            ORDER BY c.citas_fecha DESC, h.hora_fechainicio ASC, c.citas_id ASC";
+    $result = $conexion->ejecutarConsulta($query);
+    if ($result && $result->num_rows > 0) {
+        $citas = array();
+        while ($cita = $result->fetch_assoc()) {
+            $citas[] = $cita;
+        }
+        response::success($citas, 'Citas filtradas obtenidas correctamente');
+    } else {
+        response::success(array(), 'No se encontraron citas para los filtros proporcionados');
+    }
+}
+
     public function updateCita(
         $citas_id,
         $citas_fecha,
