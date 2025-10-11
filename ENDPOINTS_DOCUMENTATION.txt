@@ -1,0 +1,141 @@
+# 📋 LISTA COMPLETA DE ENDPOINTS - API CLÍNICA DEL DOLOR PIURA
+# URL Base: https://apichatbot.clinicadeldolorpiura.com/apiweb.php
+
+## ═══════════════════════════════════════════════════════════════
+## 🏢 EMPRESA
+## ═══════════════════════════════════════════════════════════════
+
+### 1. Obtener información de la empresa
+{"op": "get_Empresa"}
+
+## ═══════════════════════════════════════════════════════════════
+## 🏥 SERVICIOS
+## ═══════════════════════════════════════════════════════════════
+
+### 8. Listar todos los servicios
+{"op": "getServicios"}
+
+### 15. Obtener fotos de un servicio
+{"op": "get_fotos_Servicio", "id": 1}
+
+## ═══════════════════════════════════════════════════════════════
+## 👥 TRABAJADORES
+## ═══════════════════════════════════════════════════════════════
+
+### 20. Listar trabajadores
+{"op": "get_trabajadores"}
+
+### 25. Obtener datos por DNI (SUNAT)
+{"op": "get_datos_dni", "dni": "12345678"}
+
+### 26. Obtener datos por RUC (SUNAT)
+{"op": "get_datos_ruc", "ruc": "10123456789"}
+
+### 32. Listar todas las noticias
+{"op": "listar_noticias"}
+
+## ═══════════════════════════════════════════════════════════════
+## 📅 CITAS
+## ═══════════════════════════════════════════════════════════════
+
+
+### 40. Obtener cita con horario
+{"op": "getCita_Con_Horario", "id": 1}
+
+### 41. Listar todas las citas
+{"op": "listar_citas"}
+
+### 42. Agregar nueva cita
+{
+  "op": "add_cita",
+  "fecha": "2025-10-15",
+  "dni": "12345678",
+  "nombre": "María López",
+  "celular": "987654321",
+  "procedencia": "Piura",
+  "descripcion": "Dolor de espalda",
+  "precio": 150.00,
+  "consultorio": "Consultorio 1",
+  "preciogeneral": 200.00,
+  "preciofinal": 150.00,
+  "horario_id": 1,
+  "especialidad_id": 1
+}
+
+### 43. Actualizar cita
+{
+  "op": "updateCita",
+  "id": 1,
+  "fecha": "2025-10-15",
+  "dni": "12345678",
+  "nombre": "María López Actualizada",
+  "celular": "987654321",
+  "procedencia": "Piura",
+  "descripcion": "Dolor lumbar",
+  "precio": 150.00,
+  "estado": "Confirmada",
+  "consultorio": "Consultorio 2",
+  "preciogeneral": 200.00,
+  "preciofinal": 150.00,
+  "horario_id": 2,
+  "especialidad_id": 1
+}
+
+
+### 45. Actualizar estado de cita
+{"op": "updateEstadoCita", "id": 1, "estado": "Confirmada"}
+
+### 46. Obtener horarios disponibles
+{"op": "getHorariosDisponibles", "fecha": "2025-10-15", "especialidad_id": 1}
+
+### 47. Obtener citas por fecha
+{"op": "getCitasPorFecha", "fecha": "2025-10-15"}
+
+### 48. Asignar horario a cita
+{"op": "asignarHorarioCita", "cita_id": 1, "horario_id": 2}
+
+
+### 50. Obtener citas por fecha y especialidad
+{"op": "getCitasPorFechaYEspecialidad", "fecha": "2025-10-15", "id": 1}
+
+### 51. Obtener horarios por especialidad y fecha
+{"op": "getHorariosPorEspecialidadYFecha", "fecha": "2025-10-15", "id": 1}
+
+
+## ═══════════════════════════════════════════════════════════════
+## ❓ PREGUNTAS FRECUENTES
+## ═══════════════════════════════════════════════════════════════
+
+### 60. Listar todas las preguntas frecuentes
+{"op": "listar_preguntas"}
+
+### 65. Buscar preguntas
+{"op": "buscarPreguntas", "termino": "horario"}
+
+## ═══════════════════════════════════════════════════════════════
+## ⚕️ ESPECIALIDADES
+## ═══════════════════════════════════════════════════════════════
+
+### 66. Listar todas las especialidades
+{"op": "listar_especialidades"}
+
+### 71. Buscar especialidades
+{"op": "buscarEspecialidades", "termino": "cardio"}
+
+
+## ═══════════════════════════════════════════════════════════════
+## 📝 NOTAS IMPORTANTES
+## ═══════════════════════════════════════════════════════════════
+
+1. URL Base: https://apichatbot.clinicadeldolorpiura.com/apiweb.php
+2. Método: POST
+3. Content-Type: application/json (para la mayoría)
+4. Para uploads de archivos usar: multipart/form-data
+5. Todos los endpoints requieren el parámetro "op" obligatorio
+6. Campos opcionales se indican con ?? en el código
+7. Respuestas en formato JSON con estructura:
+   {
+     "success": true/false,
+     "data": {...},
+     "message": "mensaje descriptivo"
+   }

@@ -1,0 +1,600 @@
+{
+  "info": {
+    "name": "API Clínica del Dolor Piura",
+    "description": "Colección completa de endpoints de la API",
+    "version": "1.0.0",
+    "baseUrl": "https://apichatbot.clinicadeldolorpiura.com/apiweb.php"
+  },
+  "endpoints": [
+    {
+      "id": 1,
+      "category": "Empresa",
+      "name": "Obtener Empresa",
+      "request": {"op": "get_Empresa"}
+    },
+    {
+      "id": 2,
+      "category": "Empresa",
+      "name": "Actualizar Campo Empresa",
+      "request": {"op": "upd_campo", "Campo": "nombre_campo", "Valor": "valor"}
+    },
+    {
+      "id": 3,
+      "category": "Categorías",
+      "name": "Listar Categorías",
+      "request": {"op": "getCategorias"}
+    },
+    {
+      "id": 4,
+      "category": "Categorías",
+      "name": "Obtener Categoría",
+      "request": {"op": "getCategoria", "id": 1}
+    },
+    {
+      "id": 5,
+      "category": "Categorías",
+      "name": "Agregar Categoría",
+      "request": {"op": "addCategoria", "nombre": "Nueva Categoría"}
+    },
+    {
+      "id": 6,
+      "category": "Categorías",
+      "name": "Actualizar Categoría",
+      "request": {"op": "updCategoria", "id": 1, "nombre": "Categoría Actualizada"}
+    },
+    {
+      "id": 7,
+      "category": "Categorías",
+      "name": "Eliminar Categoría",
+      "request": {"op": "deleteCategoria", "id": 1}
+    },
+    {
+      "id": 8,
+      "category": "Servicios",
+      "name": "Listar Servicios",
+      "request": {"op": "getServicios"}
+    },
+    {
+      "id": 9,
+      "category": "Servicios",
+      "name": "Obtener Servicio",
+      "request": {"op": "getServicio", "id": 1}
+    },
+    {
+      "id": 10,
+      "category": "Servicios",
+      "name": "Agregar Servicio",
+      "request": {
+        "op": "addServicio",
+        "categoria_id": 1,
+        "nombre": "Nombre del servicio",
+        "descripcion": "Descripción del servicio",
+        "beneficios": "Beneficios del servicio",
+        "precio": "150.00",
+        "facilidades": "Facilidades de pago",
+        "video1": "https://youtube.com/video1",
+        "video2": "https://youtube.com/video2",
+        "info_adicional": "Información adicional"
+      }
+    },
+    {
+      "id": 11,
+      "category": "Servicios",
+      "name": "Actualizar Servicio",
+      "request": {
+        "op": "updServicio",
+        "id": 1,
+        "categoria_id": 1,
+        "nombre": "Nombre actualizado",
+        "descripcion": "Descripción actualizada",
+        "beneficios": "Beneficios actualizados",
+        "precio": "200.00",
+        "facilidades": "Facilidades actualizadas",
+        "video1": "https://youtube.com/video1",
+        "video2": "https://youtube.com/video2",
+        "info_adicional": "Info adicional actualizada"
+      }
+    },
+    {
+      "id": 12,
+      "category": "Servicios",
+      "name": "Eliminar Servicio",
+      "request": {"op": "deleteServicio", "id": 1}
+    },
+    {
+      "id": 13,
+      "category": "Servicios",
+      "name": "Eliminar Servicio con Fotos",
+      "request": {"op": "deleteServicioConFotos", "id": 1}
+    },
+    {
+      "id": 14,
+      "category": "Servicios",
+      "name": "Agregar Foto a Servicio",
+      "request": {"op": "add_fotoServicio", "idservicio": 1},
+      "note": "Requiere file en multipart/form-data"
+    },
+    {
+      "id": 15,
+      "category": "Servicios",
+      "name": "Obtener Fotos de Servicio",
+      "request": {"op": "get_fotos_Servicio", "id": 1}
+    },
+    {
+      "id": 16,
+      "category": "Servicios",
+      "name": "Eliminar Foto de Servicio",
+      "request": {"op": "del_foto_Servicio", "id": 1}
+    },
+    {
+      "id": 17,
+      "category": "Utilitarios",
+      "name": "Obtener Ubigeos",
+      "request": {"op": "get_ubigeo"}
+    },
+    {
+      "id": 18,
+      "category": "Trabajadores",
+      "name": "Login",
+      "request": {"op": "loggin", "user": "usuario", "pass": "contraseña"}
+    },
+    {
+      "id": 19,
+      "category": "Trabajadores",
+      "name": "Actualizar Contraseña",
+      "request": {"op": "upd_password", "id": 1, "pass": "nueva_contraseña"}
+    },
+    {
+      "id": 20,
+      "category": "Trabajadores",
+      "name": "Listar Trabajadores",
+      "request": {"op": "get_trabajadores"}
+    },
+    {
+      "id": 21,
+      "category": "Trabajadores",
+      "name": "Obtener Trabajador",
+      "request": {"op": "get_trabajador", "id": 1}
+    },
+    {
+      "id": 22,
+      "category": "Trabajadores",
+      "name": "Eliminar Trabajador (Inactivo)",
+      "request": {"op": "del_trabajador", "id": 1}
+    },
+    {
+      "id": 23,
+      "category": "Trabajadores",
+      "name": "Eliminar Trabajador Permanente",
+      "request": {"op": "delete_trabajador_permanente", "id": 1}
+    },
+    {
+      "id": 24,
+      "category": "Trabajadores",
+      "name": "Actualizar Estado Trabajador",
+      "request": {"op": "upd_trabajadorEstado", "id": 1, "estado": "Activo"}
+    },
+    {
+      "id": 25,
+      "category": "Trabajadores",
+      "name": "Obtener Datos por DNI",
+      "request": {"op": "get_datos_dni", "dni": "12345678"}
+    },
+    {
+      "id": 26,
+      "category": "Trabajadores",
+      "name": "Obtener Datos por RUC",
+      "request": {"op": "get_datos_ruc", "ruc": "10123456789"}
+    },
+    {
+      "id": 27,
+      "category": "Trabajadores",
+      "name": "Agregar Trabajador",
+      "request": {
+        "op": "add_trabajador",
+        "dni": "12345678",
+        "nombre": "Juan",
+        "apellidos": "Pérez García",
+        "cargo": "Médico",
+        "supervisor_id": 1,
+        "email": "juan@example.com",
+        "celular": "987654321",
+        "fechaNacimiento": "1990-01-15"
+      },
+      "note": "Puede incluir fotoPerfil en multipart/form-data"
+    },
+    {
+      "id": 28,
+      "category": "Trabajadores",
+      "name": "Actualizar Trabajador",
+      "request": {
+        "op": "upd_trabajador",
+        "id": 1,
+        "dni": "12345678",
+        "nombre": "Juan",
+        "apellidos": "Pérez García",
+        "cargo": "Médico Senior",
+        "supervisor_id": 1,
+        "rol": "admin",
+        "correo": "juan@example.com",
+        "telefono": "987654321",
+        "celular": "987654321",
+        "fnacimiento": "1990-01-15"
+      },
+      "note": "Puede incluir fotoPerfil en multipart/form-data"
+    },
+    {
+      "id": 29,
+      "category": "Trabajadores",
+      "name": "Eliminar Trabajador",
+      "request": {"op": "deleteTrabajador", "id": 1}
+    },
+    {
+      "id": 30,
+      "category": "Archivos",
+      "name": "Subir Fotografía",
+      "request": {"op": "Subir_fotografia"},
+      "note": "Requiere archivo_foto en multipart/form-data"
+    },
+    {
+      "id": 31,
+      "category": "Archivos",
+      "name": "Subir Archivo PDF",
+      "request": {"op": "subir_archivo"},
+      "note": "Requiere archivopdf en multipart/form-data"
+    },
+    {
+      "id": 32,
+      "category": "Noticias",
+      "name": "Listar Noticias",
+      "request": {"op": "listar_noticias"}
+    },
+    {
+      "id": 33,
+      "category": "Noticias",
+      "name": "Obtener Total Noticias",
+      "request": {"op": "getTotalNoticias"}
+    },
+    {
+      "id": 34,
+      "category": "Noticias",
+      "name": "Obtener Noticia",
+      "request": {"op": "get_noticia", "id": 1}
+    },
+    {
+      "id": 35,
+      "category": "Noticias",
+      "name": "Agregar Noticia",
+      "request": {
+        "op": "add_noticia",
+        "titulo": "Título de la noticia",
+        "subtitulo": "Subtítulo de la noticia",
+        "url_ImagenDestacada": "https://example.com/imagen.jpg",
+        "curpohtml_box1": "<p>Contenido HTML box 1</p>",
+        "url_Imagen2": "https://example.com/imagen2.jpg",
+        "curpohtml_box2": "<p>Contenido HTML box 2</p>",
+        "url_Imagen3": "https://example.com/imagen3.jpg",
+        "url_video": "https://youtube.com/video",
+        "seoMetatag": "palabras, clave, seo",
+        "seoDescripcion": "Descripción SEO de la noticia"
+      }
+    },
+    {
+      "id": 36,
+      "category": "Noticias",
+      "name": "Actualizar Noticia",
+      "request": {
+        "op": "upd_noticia",
+        "id": 1,
+        "titulo": "Título actualizado",
+        "subtitulo": "Subtítulo actualizado",
+        "url_ImagenDestacada": "https://example.com/imagen.jpg",
+        "curpohtml_box1": "<p>Contenido actualizado</p>",
+        "url_Imagen2": "https://example.com/imagen2.jpg",
+        "curpohtml_box2": "<p>Contenido box 2</p>",
+        "url_Imagen3": "https://example.com/imagen3.jpg",
+        "url_video": "https://youtube.com/video",
+        "seoMetatag": "palabras, actualizadas",
+        "seoDescripcion": "Descripción actualizada",
+        "estado": "Activo"
+      }
+    },
+    {
+      "id": 37,
+      "category": "Noticias",
+      "name": "Eliminar Noticia",
+      "request": {"op": "del_noticia", "id": 1}
+    },
+    {
+      "id": 38,
+      "category": "Noticias",
+      "name": "Actualizar Estado Noticia",
+      "request": {"op": "upd_Estado_noticia", "id": 1, "estado": "Activo"}
+    },
+    {
+      "id": 39,
+      "category": "Citas",
+      "name": "Obtener Cita",
+      "request": {"op": "getCita", "id": 1}
+    },
+    {
+      "id": 40,
+      "category": "Citas",
+      "name": "Obtener Cita con Horario",
+      "request": {"op": "getCita_Con_Horario", "id": 1}
+    },
+    {
+      "id": 41,
+      "category": "Citas",
+      "name": "Listar Citas",
+      "request": {"op": "listar_citas"}
+    },
+    {
+      "id": 42,
+      "category": "Citas",
+      "name": "Agregar Cita",
+      "request": {
+        "op": "add_cita",
+        "fecha": "2025-10-15",
+        "dni": "12345678",
+        "nombre": "María López",
+        "celular": "987654321",
+        "procedencia": "Piura",
+        "descripcion": "Dolor de espalda",
+        "precio": 150,
+        "consultorio": "Consultorio 1",
+        "preciogeneral": 200,
+        "preciofinal": 150,
+        "horario_id": 1,
+        "especialidad_id": 1
+      }
+    },
+    {
+      "id": 43,
+      "category": "Citas",
+      "name": "Actualizar Cita",
+      "request": {
+        "op": "updateCita",
+        "id": 1,
+        "fecha": "2025-10-15",
+        "dni": "12345678",
+        "nombre": "María López",
+        "celular": "987654321",
+        "procedencia": "Piura",
+        "descripcion": "Dolor lumbar",
+        "precio": 150,
+        "estado": "Confirmada",
+        "consultorio": "Consultorio 2",
+        "preciogeneral": 200,
+        "preciofinal": 150,
+        "horario_id": 2,
+        "especialidad_id": 1
+      }
+    },
+    {
+      "id": 44,
+      "category": "Citas",
+      "name": "Eliminar Cita",
+      "request": {"op": "deleteCita", "id": 1}
+    },
+    {
+      "id": 45,
+      "category": "Citas",
+      "name": "Actualizar Estado Cita",
+      "request": {"op": "updateEstadoCita", "id": 1, "estado": "Confirmada"}
+    },
+    {
+      "id": 46,
+      "category": "Citas",
+      "name": "Obtener Horarios Disponibles",
+      "request": {"op": "getHorariosDisponibles", "fecha": "2025-10-15", "especialidad_id": 1}
+    },
+    {
+      "id": 47,
+      "category": "Citas",
+      "name": "Obtener Citas por Fecha",
+      "request": {"op": "getCitasPorFecha", "fecha": "2025-10-15"}
+    },
+    {
+      "id": 48,
+      "category": "Citas",
+      "name": "Asignar Horario a Cita",
+      "request": {"op": "asignarHorarioCita", "cita_id": 1, "horario_id": 2}
+    },
+    {
+      "id": 49,
+      "category": "Citas",
+      "name": "Obtener Citas por Especialidad",
+      "request": {"op": "getCitasPorEspecialidad", "id": 1}
+    },
+    {
+      "id": 50,
+      "category": "Citas",
+      "name": "Obtener Citas por Fecha y Especialidad",
+      "request": {"op": "getCitasPorFechaYEspecialidad", "fecha": "2025-10-15", "id": 1}
+    },
+    {
+      "id": 51,
+      "category": "Citas",
+      "name": "Obtener Horarios por Especialidad y Fecha",
+      "request": {"op": "getHorariosPorEspecialidadYFecha", "fecha": "2025-10-15", "id": 1}
+    },
+    {
+      "id": 52,
+      "category": "Pagos",
+      "name": "Obtener Pago",
+      "request": {"op": "getPago", "id": 1}
+    },
+    {
+      "id": 53,
+      "category": "Pagos",
+      "name": "Listar Pagos",
+      "request": {"op": "listar_pagos"}
+    },
+    {
+      "id": 54,
+      "category": "Pagos",
+      "name": "Agregar Pago",
+      "request": {
+        "op": "add_pago",
+        "tipo": "Efectivo",
+        "monto": 150,
+        "comentario": "Pago inicial",
+        "url": "https://example.com/comprobante.pdf",
+        "cita_id": 1
+      }
+    },
+    {
+      "id": 55,
+      "category": "Pagos",
+      "name": "Actualizar Pago",
+      "request": {
+        "op": "updatePago",
+        "id": 1,
+        "tipo": "Tarjeta",
+        "monto": 200,
+        "comentario": "Pago completo",
+        "url": "https://example.com/comprobante2.pdf",
+        "cita_id": 1
+      }
+    },
+    {
+      "id": 56,
+      "category": "Pagos",
+      "name": "Eliminar Pago",
+      "request": {"op": "deletePago", "id": 1}
+    },
+    {
+      "id": 57,
+      "category": "Pagos",
+      "name": "Obtener Pagos por Cita",
+      "request": {"op": "getPagosPorCita", "cita_id": 1}
+    },
+    {
+      "id": 58,
+      "category": "Pagos",
+      "name": "Obtener Total Pagos por Cita",
+      "request": {"op": "getTotalPagosPorCita", "cita_id": 1}
+    },
+    {
+      "id": 59,
+      "category": "Pagos",
+      "name": "Obtener Pagos por Tipo",
+      "request": {"op": "getPagosPorTipo", "tipo": "Efectivo"}
+    },
+    {
+      "id": 60,
+      "category": "Preguntas Frecuentes",
+      "name": "Listar Preguntas",
+      "request": {"op": "listar_preguntas"}
+    },
+    {
+      "id": 61,
+      "category": "Preguntas Frecuentes",
+      "name": "Obtener Pregunta",
+      "request": {"op": "getPregunta", "id": 1}
+    },
+    {
+      "id": 62,
+      "category": "Preguntas Frecuentes",
+      "name": "Agregar Pregunta",
+      "request": {
+        "op": "add_pregunta",
+        "descripcion": "¿Cuál es el horario de atención?",
+        "respuesta": "Nuestro horario es de lunes a viernes de 8am a 6pm",
+        "info_adicional": "Información adicional relevante",
+        "video_url": "https://youtube.com/video",
+        "imagen_url": "https://example.com/imagen.jpg"
+      }
+    },
+    {
+      "id": 63,
+      "category": "Preguntas Frecuentes",
+      "name": "Actualizar Pregunta",
+      "request": {
+        "op": "updatePregunta",
+        "id": 1,
+        "descripcion": "¿Cuál es el horario actualizado?",
+        "respuesta": "Lunes a sábado de 8am a 7pm",
+        "info_adicional": "Info actualizada",
+        "video_url": "https://youtube.com/video2",
+        "imagen_url": "https://example.com/imagen2.jpg"
+      }
+    },
+    {
+      "id": 64,
+      "category": "Preguntas Frecuentes",
+      "name": "Eliminar Pregunta",
+      "request": {"op": "deletePregunta", "id": 1}
+    },
+    {
+      "id": 65,
+      "category": "Preguntas Frecuentes",
+      "name": "Buscar Preguntas",
+      "request": {"op": "buscarPreguntas", "termino": "horario"}
+    },
+    {
+      "id": 66,
+      "category": "Especialidades",
+      "name": "Listar Especialidades",
+      "request": {"op": "listar_especialidades"}
+    },
+    {
+      "id": 67,
+      "category": "Especialidades",
+      "name": "Obtener Especialidad",
+      "request": {"op": "getEspecialidad", "id": 1}
+    },
+    {
+      "id": 68,
+      "category": "Especialidades",
+      "name": "Agregar Especialidad",
+      "request": {
+        "op": "add_especialidad",
+        "nombre": "Cardiología",
+        "descripcion": "Especialidad del corazón",
+        "url": "https://example.com/cardiologia.jpg"
+      }
+    },
+    {
+      "id": 69,
+      "category": "Especialidades",
+      "name": "Actualizar Especialidad",
+      "request": {
+        "op": "updateEspecialidad",
+        "id": 1,
+        "nombre": "Cardiología Avanzada",
+        "descripcion": "Especialidad del corazón y sistema cardiovascular",
+        "url": "https://example.com/cardiologia2.jpg"
+      }
+    },
+    {
+      "id": 70,
+      "category": "Especialidades",
+      "name": "Eliminar Especialidad",
+      "request": {"op": "deleteEspecialidad", "id": 1}
+    },
+    {
+      "id": 71,
+      "category": "Especialidades",
+      "name": "Buscar Especialidades",
+      "request": {"op": "buscarEspecialidades", "termino": "cardio"}
+    }
+  ],
+  "summary": {
+    "totalEndpoints": 71,
+    "categories": {
+      "Empresa": 2,
+      "Categorías": 5,
+      "Servicios": 9,
+      "Utilitarios": 1,
+      "Trabajadores": 12,
+      "Archivos": 2,
+      "Noticias": 7,
+      "Citas": 13,
+      "Pagos": 8,
+      "Preguntas Frecuentes": 6,
+      "Especialidades": 6
+    }
+  }
+}

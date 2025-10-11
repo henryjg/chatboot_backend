@@ -1,0 +1,1495 @@
+{
+	"info": {
+		"_postman_id": "clinica-dolor-piura-api",
+		"name": "API Clínica del Dolor Piura",
+		"description": "Colección completa de endpoints para la API de Clínica del Dolor Piura",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "Obtener Empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_Empresa\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Campo Empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"upd_campo\",\n  \"Campo\": \"nombre_campo\",\n  \"Valor\": \"valor\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Categorías",
+			"item": [
+				{
+					"name": "Listar Categorías",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCategorias\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCategoria\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"addCategoria\",\n  \"nombre\": \"Nueva Categoría\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updCategoria\",\n  \"id\": 1,\n  \"nombre\": \"Categoría Actualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deleteCategoria\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Servicios",
+			"item": [
+				{
+					"name": "Listar Servicios",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getServicios\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Servicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getServicio\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Servicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"addServicio\",\n  \"categoria_id\": 1,\n  \"nombre\": \"Nombre del servicio\",\n  \"descripcion\": \"Descripción del servicio\",\n  \"beneficios\": \"Beneficios del servicio\",\n  \"precio\": \"150.00\",\n  \"facilidades\": \"Facilidades de pago\",\n  \"video1\": \"https://youtube.com/video1\",\n  \"video2\": \"https://youtube.com/video2\",\n  \"info_adicional\": \"Información adicional\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Servicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updServicio\",\n  \"id\": 1,\n  \"categoria_id\": 1,\n  \"nombre\": \"Nombre actualizado\",\n  \"descripcion\": \"Descripción actualizada\",\n  \"beneficios\": \"Beneficios actualizados\",\n  \"precio\": \"200.00\",\n  \"facilidades\": \"Facilidades actualizadas\",\n  \"video1\": \"https://youtube.com/video1\",\n  \"video2\": \"https://youtube.com/video2\",\n  \"info_adicional\": \"Info adicional actualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Servicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deleteServicio\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Servicio con Fotos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deleteServicioConFotos\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Fotos de Servicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_fotos_Servicio\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Foto de Servicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"del_foto_Servicio\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Utilitarios",
+			"item": [
+				{
+					"name": "Obtener Ubigeos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_ubigeo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Trabajadores",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"loggin\",\n  \"user\": \"usuario\",\n  \"pass\": \"contraseña\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Contraseña",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"upd_password\",\n  \"id\": 1,\n  \"pass\": \"nueva_contraseña\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Listar Trabajadores",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_trabajadores\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Trabajador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_trabajador\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Trabajador (Inactivo)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"del_trabajador\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Trabajador Permanente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"delete_trabajador_permanente\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Estado Trabajador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"upd_trabajadorEstado\",\n  \"id\": 1,\n  \"estado\": \"Activo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Datos por DNI (SUNAT)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_datos_dni\",\n  \"dni\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Datos por RUC (SUNAT)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_datos_ruc\",\n  \"ruc\": \"10123456789\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Trabajador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"add_trabajador\",\n  \"dni\": \"12345678\",\n  \"nombre\": \"Juan\",\n  \"apellidos\": \"Pérez García\",\n  \"cargo\": \"Médico\",\n  \"supervisor_id\": 1,\n  \"email\": \"juan@example.com\",\n  \"celular\": \"987654321\",\n  \"fechaNacimiento\": \"1990-01-15\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Trabajador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"upd_trabajador\",\n  \"id\": 1,\n  \"dni\": \"12345678\",\n  \"nombre\": \"Juan\",\n  \"apellidos\": \"Pérez García\",\n  \"cargo\": \"Médico Senior\",\n  \"supervisor_id\": 1,\n  \"rol\": \"admin\",\n  \"correo\": \"juan@example.com\",\n  \"telefono\": \"987654321\",\n  \"celular\": \"987654321\",\n  \"fnacimiento\": \"1990-01-15\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Trabajador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deleteTrabajador\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Noticias",
+			"item": [
+				{
+					"name": "Listar Noticias",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"listar_noticias\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Total Noticias",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getTotalNoticias\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Noticia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"get_noticia\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Noticia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"add_noticia\",\n  \"titulo\": \"Título de la noticia\",\n  \"subtitulo\": \"Subtítulo de la noticia\",\n  \"url_ImagenDestacada\": \"https://example.com/imagen.jpg\",\n  \"curpohtml_box1\": \"<p>Contenido HTML box 1</p>\",\n  \"url_Imagen2\": \"https://example.com/imagen2.jpg\",\n  \"curpohtml_box2\": \"<p>Contenido HTML box 2</p>\",\n  \"url_Imagen3\": \"https://example.com/imagen3.jpg\",\n  \"url_video\": \"https://youtube.com/video\",\n  \"seoMetatag\": \"palabras, clave, seo\",\n  \"seoDescripcion\": \"Descripción SEO de la noticia\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Noticia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"upd_noticia\",\n  \"id\": 1,\n  \"titulo\": \"Título actualizado\",\n  \"subtitulo\": \"Subtítulo actualizado\",\n  \"url_ImagenDestacada\": \"https://example.com/imagen.jpg\",\n  \"curpohtml_box1\": \"<p>Contenido actualizado</p>\",\n  \"url_Imagen2\": \"https://example.com/imagen2.jpg\",\n  \"curpohtml_box2\": \"<p>Contenido box 2</p>\",\n  \"url_Imagen3\": \"https://example.com/imagen3.jpg\",\n  \"url_video\": \"https://youtube.com/video\",\n  \"seoMetatag\": \"palabras, actualizadas\",\n  \"seoDescripcion\": \"Descripción actualizada\",\n  \"estado\": \"Activo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Noticia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"del_noticia\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Estado Noticia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"upd_Estado_noticia\",\n  \"id\": 1,\n  \"estado\": \"Activo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citas",
+			"item": [
+				{
+					"name": "Listar Citas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"listar_citas\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCita\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Cita con Horario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCita_Con_Horario\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"add_cita\",\n  \"fecha\": \"2025-10-15\",\n  \"dni\": \"12345678\",\n  \"nombre\": \"María López\",\n  \"celular\": \"987654321\",\n  \"procedencia\": \"Piura\",\n  \"descripcion\": \"Dolor de espalda\",\n  \"precio\": 150,\n  \"consultorio\": \"Consultorio 1\",\n  \"preciogeneral\": 200,\n  \"preciofinal\": 150,\n  \"horario_id\": 1,\n  \"especialidad_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updateCita\",\n  \"id\": 1,\n  \"fecha\": \"2025-10-15\",\n  \"dni\": \"12345678\",\n  \"nombre\": \"María López\",\n  \"celular\": \"987654321\",\n  \"procedencia\": \"Piura\",\n  \"descripcion\": \"Dolor lumbar\",\n  \"precio\": 150,\n  \"estado\": \"Confirmada\",\n  \"consultorio\": \"Consultorio 2\",\n  \"preciogeneral\": 200,\n  \"preciofinal\": 150,\n  \"horario_id\": 2,\n  \"especialidad_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deleteCita\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Estado Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updateEstadoCita\",\n  \"id\": 1,\n  \"estado\": \"Confirmada\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Horarios Disponibles",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getHorariosDisponibles\",\n  \"fecha\": \"2025-10-15\",\n  \"especialidad_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Citas por Fecha",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCitasPorFecha\",\n  \"fecha\": \"2025-10-15\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Asignar Horario a Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"asignarHorarioCita\",\n  \"cita_id\": 1,\n  \"horario_id\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Citas por Especialidad",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCitasPorEspecialidad\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Citas por Fecha y Especialidad",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getCitasPorFechaYEspecialidad\",\n  \"fecha\": \"2025-10-15\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Horarios por Especialidad y Fecha",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getHorariosPorEspecialidadYFecha\",\n  \"fecha\": \"2025-10-15\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Pagos",
+			"item": [
+				{
+					"name": "Listar Pagos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"listar_pagos\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Pago",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getPago\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Pago",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"add_pago\",\n  \"tipo\": \"Efectivo\",\n  \"monto\": 150,\n  \"comentario\": \"Pago inicial\",\n  \"url\": \"https://example.com/comprobante.pdf\",\n  \"cita_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Pago",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updatePago\",\n  \"id\": 1,\n  \"tipo\": \"Tarjeta\",\n  \"monto\": 200,\n  \"comentario\": \"Pago completo\",\n  \"url\": \"https://example.com/comprobante2.pdf\",\n  \"cita_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Pago",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deletePago\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Pagos por Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getPagosPorCita\",\n  \"cita_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Total Pagos por Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getTotalPagosPorCita\",\n  \"cita_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Pagos por Tipo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getPagosPorTipo\",\n  \"tipo\": \"Efectivo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Preguntas Frecuentes",
+			"item": [
+				{
+					"name": "Listar Preguntas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"listar_preguntas\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Pregunta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getPregunta\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Pregunta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"add_pregunta\",\n  \"descripcion\": \"¿Cuál es el horario de atención?\",\n  \"respuesta\": \"Nuestro horario es de lunes a viernes de 8am a 6pm\",\n  \"info_adicional\": \"Información adicional relevante\",\n  \"video_url\": \"https://youtube.com/video\",\n  \"imagen_url\": \"https://example.com/imagen.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Pregunta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updatePregunta\",\n  \"id\": 1,\n  \"descripcion\": \"¿Cuál es el horario actualizado?\",\n  \"respuesta\": \"Lunes a sábado de 8am a 7pm\",\n  \"info_adicional\": \"Info actualizada\",\n  \"video_url\": \"https://youtube.com/video2\",\n  \"imagen_url\": \"https://example.com/imagen2.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Pregunta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deletePregunta\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Preguntas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"buscarPreguntas\",\n  \"termino\": \"horario\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Especialidades",
+			"item": [
+				{
+					"name": "Listar Especialidades",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"listar_especialidades\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Especialidad",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"getEspecialidad\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Agregar Especialidad",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"add_especialidad\",\n  \"nombre\": \"Cardiología\",\n  \"descripcion\": \"Especialidad del corazón\",\n  \"url\": \"https://example.com/cardiologia.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Especialidad",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"updateEspecialidad\",\n  \"id\": 1,\n  \"nombre\": \"Cardiología Avanzada\",\n  \"descripcion\": \"Especialidad del corazón y sistema cardiovascular\",\n  \"url\": \"https://example.com/cardiologia2.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Especialidad",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"deleteEspecialidad\",\n  \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Especialidades",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"op\": \"buscarEspecialidades\",\n  \"termino\": \"cardio\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/apiweb.php",
+							"host": ["{{base_url}}"],
+							"path": ["apiweb.php"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://apichatbot.clinicadeldolorpiura.com",
+			"type": "string"
+		}
+	]
+}
