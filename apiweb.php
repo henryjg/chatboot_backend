@@ -485,6 +485,7 @@ if ($metodoPeticion === 'POST' ) {
             $cita_preciofinal = $data['preciofinal'] ?? 0;
             $horario_id = $data['horario_id'] ?? null;
             $especialidad_id = $data['especialidad_id'] ?? null;
+            $modalidad = $data['modalidad'] ?? null;
             
             echo $CitasController->updateCita(
                 $citas_id,
@@ -500,7 +501,8 @@ if ($metodoPeticion === 'POST' ) {
                 $cita_preciogeneral,
                 $cita_preciofinal,
                 $horario_id,
-                $especialidad_id
+                $especialidad_id,
+                $modalidad_id
             );
             break;
 
@@ -517,6 +519,7 @@ if ($metodoPeticion === 'POST' ) {
             $cita_preciofinal = $data['preciofinal'] ?? 0;
             $horario_id = $data['horario_id'];
             $especialidad_id = $data['especialidad_id'];
+            $modalidad = $data['modalidad'] ?? '';
             
             echo $CitasController->insertCita(
                 $citas_fecha,
@@ -530,7 +533,8 @@ if ($metodoPeticion === 'POST' ) {
                 $cita_preciogeneral,
                 $cita_preciofinal,
                 $horario_id,
-                $especialidad_id
+                $especialidad_id,
+                $modalidad
             );
             break;
 

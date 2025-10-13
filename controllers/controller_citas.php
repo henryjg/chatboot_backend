@@ -26,6 +26,7 @@ class CitasController {
                     c.cita_preciogeneral as preciogeneral,
                     c.cita_preciofinal as preciofinal,
                     c.cita_especialidad_id as especialidad_id,
+                    c.cita_modalidad as modalidad,
                     e.espe_nombre as especialidad_nombre,
                     h.hora_fechainicio as hora_inicio,
                     h.hora_fechafin as hora_fin,
@@ -60,6 +61,7 @@ class CitasController {
                     c.citas_consultorio as consultorio,
                     c.cita_preciogeneral as preciogeneral,
                     c.cita_preciofinal as preciofinal, 
+                    c.cita_modalidad as modalidad,
                     h.hora_fechainicio, 
                     h.hora_fechafin, h.hora_id
                   FROM citas c
@@ -93,6 +95,7 @@ class CitasController {
                    c.cita_preciogeneral as preciogeneral,
                    c.cita_preciofinal as preciofinal,
                    c.cita_especialidad_id as especialidad_id,
+                   c.cita_modalidad as modalidad,
                    e.espe_nombre as especialidad_nombre,
                    h.hora_fechainicio as hora_inicio,
                    h.hora_fechafin as hora_fin,
@@ -142,6 +145,7 @@ class CitasController {
                c.cita_preciogeneral as preciogeneral,
                c.cita_preciofinal as preciofinal,
                c.cita_especialidad_id as especialidad_id,
+               c.cita_modalidad as modalidad,
                e.espe_nombre as especialidad_nombre,
                h.hora_fechainicio as hora_inicio,
                h.hora_fechafin as hora_fin,
@@ -178,7 +182,8 @@ class CitasController {
         $cita_preciogeneral,
         $cita_preciofinal,
         $horario_id,
-        $especialidad_id
+        $especialidad_id,
+        $modalidad
     ) {
         $conexion = new Conexion();
 
@@ -238,7 +243,8 @@ class CitasController {
                     citas_consultorio = '$citas_consultorio',
                     cita_preciogeneral = '$cita_preciogeneral',
                     cita_preciofinal = '$cita_preciofinal',
-                    cita_especialidad_id = '$especialidad_id'
+                    cita_especialidad_id = '$especialidad_id',
+                    cita_modalidad = '$modalidad'
                 WHERE citas_id = $citas_id";
 
         $result = $conexion->save($query);
@@ -281,7 +287,8 @@ class CitasController {
         $cita_preciogeneral,
         $cita_preciofinal,
         $horario_id,
-        $especialidad_id
+        $especialidad_id,
+        $modalidad
     ) {
         $conexion = new Conexion();
         
@@ -365,7 +372,8 @@ class CitasController {
                     citas_consultorio,
                     cita_preciogeneral,
                     cita_preciofinal,
-                    cita_especialidad_id
+                    cita_especialidad_id,
+                    cita_modalidad
                   ) VALUES (
                     '$citas_fecha', 
                     '$citas_dni', 
@@ -378,7 +386,8 @@ class CitasController {
                     '$citas_consultorio',
                     '$cita_preciogeneral',
                     '$cita_preciofinal',
-                    '$especialidad_id'
+                    '$especialidad_id',
+                    '$modalidad'
                   )";
         $result = $conexion->insertar($query);
 
@@ -451,6 +460,7 @@ class CitasController {
                    c.cita_preciogeneral as preciogeneral,
                    c.cita_preciofinal as preciofinal,
                    c.cita_especialidad_id as especialidad_id,
+                   c.cita_modalidad as modalidad,
                    e.espe_nombre as especialidad_nombre,
                    h.hora_fechainicio as hora_inicio,
                    h.hora_fechafin as hora_fin,
@@ -546,6 +556,7 @@ class CitasController {
                    c.cita_preciogeneral as preciogeneral,
                    c.cita_preciofinal as preciofinal,
                    c.cita_especialidad_id as especialidad_id,
+                   c.cita_modalidad as modalidad,
                    e.espe_nombre as especialidad_nombre,
                    h.hora_fechainicio as hora_inicio,
                    h.hora_fechafin as hora_fin,
@@ -586,6 +597,7 @@ class CitasController {
                    c.cita_preciogeneral as preciogeneral,
                    c.cita_preciofinal as preciofinal,
                    c.cita_especialidad_id as especialidad_id,
+                   c.cita_modalidad as modalidad,
                    e.espe_nombre as especialidad_nombre,
                    h.hora_fechainicio as hora_inicio,
                    h.hora_fechafin as hora_fin,
