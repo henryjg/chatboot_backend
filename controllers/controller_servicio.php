@@ -57,6 +57,27 @@ class ServicioController {
 		if ($result && $result->num_rows > 0) {
 			$servicios = array();
 			while ($servicio = $result->fetch_assoc()) {
+				// Consultar las fotos del servicio
+				$servicioId = $servicio['id'];
+				$queryFotos = "SELECT 
+								foto_id as id,
+								foto_url as url,
+								foto_nombre as nombre,
+								foto_orden as orden
+							FROM foto_servicio
+							WHERE foto_servicio = $servicioId
+							ORDER BY foto_orden ASC";
+				$resultFotos = $conexion->ejecutarConsulta($queryFotos);
+				
+				// Agregar las fotos al servicio
+				$fotos = array();
+				if ($resultFotos && $resultFotos->num_rows > 0) {
+					while ($foto = $resultFotos->fetch_assoc()) {
+						$fotos[] = $foto;
+					}
+				}
+				$servicio['fotos'] = $fotos;
+				
 				$servicios[] = $servicio;
 			}
 			response::success($servicios, 'Lista de servicios obtenida correctamente');
