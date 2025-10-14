@@ -297,6 +297,7 @@ if ($metodoPeticion === 'POST' ) {
                 $fotoPerfil = null;
             }
 
+            $pass = $data['pass'];
             echo $TrabajadorController->insertTrabajador(
                 $dni,
                 $nombre,
@@ -307,7 +308,8 @@ if ($metodoPeticion === 'POST' ) {
                 $telefono,
                 $celular,
                 $fotoPerfil,
-                $fnacimiento
+                $fnacimiento,
+                $pass
             );
             break;
         

@@ -11,91 +11,90 @@ class TrabajadorController {
     }
 
     // ------------------------------------------------------
-    public function insertTrabajador(
-        $tra_dni,
-        $tra_nombre,
-        $tra_apellido,
-        $tra_email,
-        $tra_cargo,
-        $tra_supervisor,
-        $tra_telefono,
-        $tra_celular,
-        $tra_fotofile,
-        $tra_fnacimiento
-    ) {
-        $conexion = new Conexion();
-        $tra_fechareg = date("Y-m-d");
-        
-        // Usuario y contraseña
-        $tra_user = $tra_dni;
-        $tra_pass = $this->encriptar($tra_dni); // Hashear la contraseña
-        
-        // Verificar si el DNI ya existe
-        $checkQuery = "SELECT COUNT(*) as count FROM trabajador WHERE tra_dni = '$tra_dni'";
-        $checkResult = $conexion->ejecutarConsulta($checkQuery);
-        $row = $checkResult->fetch_assoc();
-        
-        if ($row['count'] > 0) {
-            response::error('El DNI ya está registrado');
-            return;
-        }
-        
-        // Subir archivo y obtener URL
-        $tra_fotourl = $this->subir_archivo($tra_fotofile);
-        
-        // Asignar siempre el rol Administrador al registrar
-        $tra_rol = 'Administrador';
-        
-        // Insertar nuevo trabajador
-        $query = "INSERT INTO trabajador (
-            tra_dni,
-            tra_nombre,
-            tra_apellido,
-            tra_email,
-            tra_cargo,
-            tra_supervisor_id,
-            tra_telefono,
-            tra_celular,
-            tra_fotourl,
-            tra_eslider,
-            tra_liderId,
-            tra_rol,
-            tra_user,
-            tra_pass,
-            tra_estado,
-            tra_empresaId,
-            tra_fechareg,
-            tra_fnacimiento
-        ) VALUES (
-            '$tra_dni',
-            '$tra_nombre',
-            '$tra_apellido',
-            '$tra_email',
-            '$tra_cargo',
-            '$tra_supervisor',
-            '$tra_telefono',
-            '$tra_celular',
-            '$tra_fotourl',
-            '',
-            '',
-            '$tra_rol',
-            '$tra_user',
-            '$tra_pass',
-            'Activo',
-            '1',
-            '$tra_fechareg',
-            '$tra_fnacimiento'
-        )";
-        
-        $result = $conexion->insertar($query);
-        
-        if ($result > 0) {
-            response::success($result, 'Trabajador insertado correctamente');
-        } else {
-            response::error('Error al insertar el trabajador');
-        }
+  public function insertTrabajador(
+    $tra_dni,
+    $tra_nombre,
+    $tra_apellido,
+    $tra_email,
+    $tra_cargo,
+    $tra_supervisor,
+    $tra_telefono,
+    $tra_celular,
+    $tra_fotofile,
+    $tra_fnacimiento,
+    $pass
+) {
+    $conexion = new Conexion();
+    $tra_fechareg = date("Y-m-d");
+
+    // Usuario y contraseña
+    $tra_user = $tra_dni;
+    $tra_pass = $this->encriptar($pass); // Hashear la contraseña ingresada
+
+    // Verificar si el DNI ya existe
+    $checkQuery = "SELECT COUNT(*) as count FROM trabajador WHERE tra_dni = '$tra_dni'";
+    $checkResult = $conexion->ejecutarConsulta($checkQuery);
+    $row = $checkResult->fetch_assoc();
+    if ($row['count'] > 0) {
+        response::error('El DNI ya está registrado');
+        return;
     }
 
+    // Subir archivo y obtener URL
+    $tra_fotourl = $this->subir_archivo($tra_fotofile);
+
+    // Asignar siempre el rol Administrador al registrar
+    $tra_rol = 'Administrador';
+
+    // Insertar nuevo trabajador
+    $query = "INSERT INTO trabajador (
+        tra_dni,
+        tra_nombre,
+        tra_apellido,
+        tra_email,
+        tra_cargo,
+        tra_supervisor_id,
+        tra_telefono,
+        tra_celular,
+        tra_fotourl,
+        tra_eslider,
+        tra_liderId,
+        tra_rol,
+        tra_user,
+        tra_pass,
+        tra_estado,
+        tra_empresaId,
+        tra_fechareg,
+        tra_fnacimiento
+    ) VALUES (
+        '$tra_dni',
+        '$tra_nombre',
+        '$tra_apellido',
+        '$tra_email',
+        '$tra_cargo',
+        '$tra_supervisor',
+        '$tra_telefono',
+        '$tra_celular',
+        '$tra_fotourl',
+        '',
+        '',
+        '$tra_rol',
+        '$tra_user',
+        '$tra_pass',
+        'Activo',
+        '1',
+        '$tra_fechareg',
+        '$tra_fnacimiento'
+    )";
+
+    $result = $conexion->insertar($query);
+
+    if ($result > 0) {
+        response::success($result, 'Trabajador insertado correctamente');
+    } else {
+        response::error('Error al insertar el trabajador');
+    }
+}
 
     // ------------------------------------------------------
     public function getTrabajador($tra_id) {
