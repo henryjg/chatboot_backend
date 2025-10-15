@@ -1,4 +1,3 @@
-
 <?php
 include_once './utils/response.php';
 include_once './config/database.php';
@@ -50,6 +49,90 @@ class ServicioController {
 			response::error('No se encontraron servicios registrados');
 		}
 	}
+
+	// Retorna solo la descripción del servicio
+	public function getDescripcionServicio($id) {
+		$conexion = new Conexion();
+		$query = "SELECT servicio_descripcion as descripcion FROM servicio WHERE servicio_id = '$id'";
+		$result = $conexion->ejecutarConsulta($query);
+		if ($result && $result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			response::success($row['descripcion'], 'Descripción obtenida correctamente');
+		} else {
+			response::success('', 'No hay descripción disponible');
+		}
+	}
+
+	// Retorna solo los beneficios del servicio
+	public function getBeneficiosServicio($id) {
+		$conexion = new Conexion();
+		$query = "SELECT servicio_beneficios as beneficios FROM servicio WHERE servicio_id = '$id'";
+		$result = $conexion->ejecutarConsulta($query);
+		if ($result && $result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			response::success($row['beneficios'], 'Beneficios obtenidos correctamente');
+		} else {
+			response::success('', 'No hay beneficios disponibles');
+		}
+	}
+
+	// Retorna solo las imágenes del servicio
+	public function getImagenesServicio($id) {
+		$conexion = new Conexion();
+		$query = "SELECT foto_id as id, foto_url as url, foto_nombre as nombre, foto_orden as orden FROM foto_servicio WHERE foto_servicio = $id ORDER BY foto_orden ASC";
+		$result = $conexion->ejecutarConsulta($query);
+		$fotos = array();
+		if ($result && $result->num_rows > 0) {
+			while ($foto = $result->fetch_assoc()) {
+				$fotos[] = $foto;
+			}
+		}
+		response::success($fotos, count($fotos) > 0 ? 'Imágenes obtenidas correctamente' : 'No hay imágenes disponibles');
+	}
+
+	// Retorna solo el precio y facilidades del servicio
+	public function getPrecioFacilidadesServicio($id) {
+		$conexion = new Conexion();
+		$query = "SELECT servicio_precio as precio, servicio_facilidades as facilidades FROM servicio WHERE servicio_id = '$id'";
+		$result = $conexion->ejecutarConsulta($query);
+		if ($result && $result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			$data = array();
+			if (!empty($row['precio'])) $data['precio'] = $row['precio'];
+			if (!empty($row['facilidades'])) $data['facilidades'] = $row['facilidades'];
+			response::success($data, 'Precio y facilidades obtenidos correctamente');
+		} else {
+			response::success(array(), 'No hay precio ni facilidades disponibles');
+		}
+	}
+
+	// Retorna solo los videos del servicio
+	public function getVideosServicio($id) {
+		$conexion = new Conexion();
+		$query = "SELECT servicio_video1 as video1, servicio_video2 as video2 FROM servicio WHERE servicio_id = '$id'";
+		$result = $conexion->ejecutarConsulta($query);
+		$videos = array();
+		if ($result && $result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			if (!empty($row['video1'])) $videos[] = $row['video1'];
+			if (!empty($row['video2'])) $videos[] = $row['video2'];
+		}
+		response::success($videos, count($videos) > 0 ? 'Videos obtenidos correctamente' : 'No hay videos disponibles');
+	}
+
+	// Retorna solo la info adicional del servicio
+	public function getInfoAdicionalServicio($id) {
+		$conexion = new Conexion();
+		$query = "SELECT servicio_info_adicional as info_adicional FROM servicio WHERE servicio_id = '$id'";
+		$result = $conexion->ejecutarConsulta($query);
+		if ($result && $result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			response::success($row['info_adicional'], 'Info adicional obtenida correctamente');
+		} else {
+			response::success('', 'No hay info adicional disponible');
+		}
+	}
+	
 	private $database;
 
 	public function __construct() {

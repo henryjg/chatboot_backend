@@ -146,6 +146,37 @@ if ($metodoPeticion === 'POST' ) {
         echo $ServicioController->get_servicios_2();
         break;
 
+    // Endpoints para bloques de servicio
+        case 'getDescripcionServicio':
+            $servicio_id = $data['id'];
+            $ServicioController->getDescripcionServicio($servicio_id);
+            break;
+
+        case 'getBeneficiosServicio':
+            $servicio_id = $data['id'];
+            $ServicioController->getBeneficiosServicio($servicio_id);
+            break;
+
+        case 'getImagenesServicio':
+            $servicio_id = $data['id'];
+            $ServicioController->getImagenesServicio($servicio_id);
+            break;
+
+        case 'getPrecioFacilidadesServicio':
+            $servicio_id = $data['id'];
+            $ServicioController->getPrecioFacilidadesServicio($servicio_id);
+            break;
+
+        case 'getVideosServicio':
+            $servicio_id = $data['id'];
+            $ServicioController->getVideosServicio($servicio_id);
+            break;
+
+        case 'getInfoAdicionalServicio':
+            $servicio_id = $data['id'];
+            $ServicioController->getInfoAdicionalServicio($servicio_id);
+            break;
+
     case 'getServicio':
         $servicio_id = $data['id'];
         echo $ServicioController->getServicio($servicio_id);
