@@ -142,6 +142,10 @@ if ($metodoPeticion === 'POST' ) {
         echo $ServicioController->getServicios();
         break;
 
+    case 'get_servicios_2':
+        echo $ServicioController->get_servicios_2();
+        break;
+
     case 'getServicio':
         $servicio_id = $data['id'];
         echo $ServicioController->getServicio($servicio_id);

@@ -4,6 +4,52 @@ include_once './utils/response.php';
 include_once './config/database.php';
 
 class ServicioController {
+	// Obtiene servicios sin mostrar el campo precio
+	public function get_servicios_2() {
+		$conexion = new Conexion();
+		$query = "SELECT 
+					s.servicio_id as id,
+					s.servicio_categoria as categoria_id,
+					c.nombre as categoria_nombre,
+					s.servicio_nombre as nombre,
+					s.servicio_descripcion as descripcion,
+					s.servicio_beneficios as beneficios,
+					s.servicio_facilidades as facilidades,
+					s.servicio_video1 as video1,
+					s.servicio_video2 as video2,
+					s.servicio_info_adicional as info_adicional
+				FROM servicio s
+				LEFT JOIN categorias c ON s.servicio_categoria = c.id";
+		$result = $conexion->ejecutarConsulta($query);
+
+		if ($result && $result->num_rows > 0) {
+			$servicios = array();
+			while ($servicio = $result->fetch_assoc()) {
+				// Consultar las fotos del servicio
+				$servicioId = $servicio['id'];
+				$queryFotos = "SELECT 
+								foto_id as id,
+								foto_url as url,
+								foto_nombre as nombre,
+								foto_orden as orden
+							FROM foto_servicio
+							WHERE foto_servicio = $servicioId
+							ORDER BY foto_orden ASC";
+				$resultFotos = $conexion->ejecutarConsulta($queryFotos);
+				$fotos = array();
+				if ($resultFotos && $resultFotos->num_rows > 0) {
+					while ($foto = $resultFotos->fetch_assoc()) {
+						$fotos[] = $foto;
+					}
+				}
+				$servicio['fotos'] = $fotos;
+				$servicios[] = $servicio;
+			}
+			response::success($servicios, 'Lista de servicios (sin precios) obtenida correctamente');
+		} else {
+			response::error('No se encontraron servicios registrados');
+		}
+	}
 	private $database;
 
 	public function __construct() {
